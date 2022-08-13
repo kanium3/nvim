@@ -100,4 +100,13 @@ vim.api.nvim_set_keymap('n', '<leader>B', ':lua require("dap").set_breakpoint(ni
 vim.api.nvim_set_keymap('n', '<leader>lp', ':lua require("dap").set_breakpoint(nil, nil, vim.fn.input("Log point message: "))<CR>', { silent = true, noremap = true })
 vim.api.nvim_set_keymap('n', '<leader>dr', ':lua require("dap").repl.open()<CR>', { silent = true, noremap = true })
 vim.api.nvim_set_keymap('n', '<leader>dl', ':lua require("dap").run_last()<CR>', { noremap = true, silent = true })
+-- ToggleTerm
+vim.api.nvim_set_keymap('n', '<leader>st', ':ToggleTerm<CR>', { silent = true, noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>gg', ':lua require("plug_conf.toggleterm").lazygit_toggle()<CR>', { silent = true, noremap = true })
 
+function _G.set_terminal_keymaps()
+  local opts = {buffer = 0}
+  vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
+end
+
+vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')

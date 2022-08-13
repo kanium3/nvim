@@ -1,10 +1,10 @@
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
 local lspconfig = require("lspconfig")
 local on_attach = require("lsp.handler")
-local codelldb_path = '/home/kanium/.local/share/nvim/mason/bin/codelldb'
-local liblldb_path = '/home/kanium/.local/share/nvim/mason/packages/codelldb/extension/lldb/lib/liblldb.so'
+local codelldb_path = "/home/kanium/.local/share/nvim/mason/packages/codelldb/extension/adapter/codelldb"
+local liblldb_path = "/home/kanium/.local/share/nvim/mason/packages/codelldb/extension/lldb/lib/liblldb.so"
 
-lspconfig.sumneko_lua.setup {
+lspconfig.sumneko_lua.setup({
 	on_attach = on_attach,
 	capabilities = capabilities,
 	cmd = { "/home/kanium/.local/share/nvim/mason/bin/lua-language-server" },
@@ -12,11 +12,11 @@ lspconfig.sumneko_lua.setup {
 		Lua = {
 			runtime = {
 				-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-				version = 'LuaJIT',
+				version = "LuaJIT",
 			},
 			diagnostics = {
 				-- Get the language server to recognize the `vim` global
-				globals = { 'vim', 'use' },
+				globals = { "vim", "use" },
 			},
 			workspace = {
 				-- Make the server aware of Neovim runtime files
@@ -28,51 +28,65 @@ lspconfig.sumneko_lua.setup {
 			},
 		},
 	},
-}
+})
 
-lspconfig.prismals.setup {}
+lspconfig.prismals.setup({})
 
-lspconfig.crystalline.setup {
+lspconfig.crystalline.setup({
 	on_attach = on_attach,
 	capabilities = capabilities,
-	cmd = { "/home/kanium/.local/share/nvim/mason/bin/crystalline" }
-}
+	cmd = { "/home/kanium/.local/share/nvim/mason/bin/crystalline", "--stdio" },
+})
 
-lspconfig.pyright.setup {
+lspconfig.pyright.setup({
 	on_attach = on_attach,
 	capabilities = capabilities,
 	cmd = { "/home/kanium/.local/share/nvim/mason/bin/pyright-langserver", "--stdio" },
-	single_file_support = true
-}
+	single_file_support = true,
+})
+
+lspconfig.elixirls.setup({
+	on_attach = on_attach,
+	capabilities = capabilities,
+	cmd = { "/home/kanium/.local/share/nvim/mason/packages/elixir-ls/language_server.sh" },
+})
 
 ---@diagnostic disable-next-line: undefined-field
 require("typescript").setup({
 	server = { -- pass options to lspconfig's setup method
 		on_attach = on_attach,
 		capabilities = capabilities,
-		cmd = { "/home/kanium/.local/share/nvim/mason/bin/typescript-language-server",
-			"--stdio" }
+		cmd = { "/home/kanium/.local/share/nvim/mason/bin/typescript-language-server", "--stdio" },
 	},
 })
 
-require("flutter-tools").setup {
+require("flutter-tools").setup({
 	lsp = {
 		on_attach = on_attach,
-		capabilities = capabilities
-	}
-}
+		capabilities = capabilities,
+	},
+})
 
 local rust_opts = {
 	server = {
 		on_attach = on_attach,
 		capabilities = capabilities,
-		cmd = { "/home/kanium/.local/share/nvim/mason/bin/rust-analyzer" }
+		cmd = { "/home/kanium/.local/share/nvim/mason/bin/rust-analyzer" },
+	},
+	settings = {
+		['rust-analyzer'] = {
+			checkOnSave = {
+				allFeatures = true,
+				overrideCommand = {
+					"cargo",
+					"clippy",
+				},
+			},
+		},
 	},
 	dap = {
-		adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path)
-	}
+		adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
+	},
 }
 
 require("rust-tools").setup(rust_opts)
-
-
