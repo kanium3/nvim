@@ -1,8 +1,4 @@
-vim.cmd([[packadd packer.nvim]])
-
 require("packer").startup(function(use)
-	-- self
-	use("wbthomason/packer.nvim")
 	-- vim help in japanese
 	use("vim-jp/vimdoc-ja")
 	-- color scheme
@@ -360,10 +356,14 @@ require("packer").startup(function(use)
 	})
 	use({
 		"mortepau/codicons.nvim",
-		config = function ()
+		config = function()
 			require("codicons").setup({})
-		end
+		end,
 	})
+	-- end
+	if require("packer_bootstrap").packer_bootstrap then
+		require("packer").sync()
+	end
 end)
 
 -- plugin settings
