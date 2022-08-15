@@ -1,6 +1,6 @@
 -- module files
-require("editor")
 require("plug_conf.main")
+require("editor")
+require("mytheme")
 require("keymaps.userkeymap")
 require("lsp.lsp")
-require("mytheme")
