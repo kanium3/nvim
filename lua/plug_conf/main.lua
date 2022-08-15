@@ -355,8 +355,14 @@ require("packer").startup(function(use)
 	use({
 		"brendalf/mix.nvim",
 		config = function()
-			require("mix").setup {}
+			require("mix").setup({})
 		end,
+	})
+	use({
+		"mortepau/codicons.nvim",
+		config = function ()
+			require("codicons").setup({})
+		end
 	})
 end)
 
