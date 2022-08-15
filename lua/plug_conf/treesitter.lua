@@ -1,20 +1,34 @@
 local treesitter = require("nvim-treesitter.configs")
 
-treesitter.setup {
+treesitter.setup({
+	ensure_installed = {
+		"rust",
+		"dart",
+		"regex",
+		"vim",
+		"lua",
+		"elixir",
+		"javascript",
+		"typescript",
+		"toml",
+		"python",
+		"prisma",
+		"markdown",
+	},
 	highlight = {
 		enable = true,
-		additional_vim_regex_highlighting = false --spellsitter
+		additional_vim_regex_highlighting = false, --spellsitter
 	},
 	yati = {
-		enable = true
+		enable = true,
 	},
 	rainbow = {
 		enable = true,
 		extended_mode = true,
-		max_file_lines = nil
+		max_file_lines = nil,
 	},
 	autotag = {
-		enable = true
+		enable = true,
 	},
 	textobjects = {
 		select = {
@@ -62,7 +76,7 @@ treesitter.setup {
 		},
 		lsp_interop = {
 			enable = true,
-			border = 'none',
+			border = "none",
 			peek_definition_code = {
 				["<leader>df"] = "@function.outer",
 				["<leader>dF"] = "@class.outer",
@@ -71,11 +85,11 @@ treesitter.setup {
 	},
 	textsubjects = {
 		enable = true,
-		prev_selection = ',', -- (Optional) keymap to select the previous selection
+		prev_selection = ",", -- (Optional) keymap to select the previous selection
 		keymaps = {
-			['.'] = 'textsubjects-smart',
-			[';'] = 'textsubjects-container-outer',
-			['i;'] = 'textsubjects-container-inner',
+			["."] = "textsubjects-smart",
+			[";"] = "textsubjects-container-outer",
+			["i;"] = "textsubjects-container-inner",
 		},
 	},
-}
+})
