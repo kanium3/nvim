@@ -16,8 +16,7 @@ vim.cmd("syntax on")
 vim.cmd('let g:neovide_cursor_vfx_mode = "railgun"')
 
 -- auto plugin action
-vim.cmd([[autocmd BufWritePost plugins.lua PackerCompile]])
-
+vim.cmd([[autocmd BufWritePost plug_config/main.lua PackerCompile]])
 -- notify
 vim.notify = require("notify")
 -- ui

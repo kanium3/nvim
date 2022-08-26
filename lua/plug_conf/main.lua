@@ -24,8 +24,13 @@ require("packer").startup(function(use)
 	use("nvim-lua/plenary.nvim")
 	-- Rust
 	use("rust-lang/rust.vim")
+	use("simrat39/rust-tools.nvim")
 	use({
-		"simrat39/rust-tools.nvim",
+		"saecki/crates.nvim",
+		requires = { "nvim-lua/plenary.nvim" },
+		config = function()
+			require("crates").setup()
+		end,
 	})
 	-- Snippet
 	use({
@@ -61,7 +66,7 @@ require("packer").startup(function(use)
 	use({
 		"kyazdani42/nvim-tree.lua",
 		requires = {
-			"kyazdani42/nvim-web-devicons", -- optional, for file icon
+			"kyazdani42/nvim-web-devicons", -- for file icon
 		},
 		config = function()
 			require("plug_conf.nvim_tree")
@@ -105,6 +110,7 @@ require("packer").startup(function(use)
 			require("plug_conf.trouble")
 		end,
 	})
+	-- Tree sitter
 	use({
 		{
 			"yioneko/nvim-yati",
@@ -154,6 +160,7 @@ require("packer").startup(function(use)
 		end,
 	})
 
+	-- for formatter etc...
 	use({
 		"jose-elias-alvarez/null-ls.nvim",
 		requires = { "nvim-lua/plenary.nvim" },
@@ -163,13 +170,6 @@ require("packer").startup(function(use)
 	})
 
 	use("jose-elias-alvarez/typescript.nvim")
-	use({
-		"saecki/crates.nvim",
-		requires = { "nvim-lua/plenary.nvim" },
-		config = function()
-			require("crates").setup()
-		end,
-	})
 	use({
 		"wfxr/minimap.vim",
 		run = ":!cargo install --locked code-minimap",
@@ -238,7 +238,12 @@ require("packer").startup(function(use)
 		"kosayoda/nvim-lightbulb",
 		requires = "antoinemadec/FixCursorHold.nvim",
 	})
-	use("simrat39/symbols-outline.nvim")
+	use({
+		"simrat39/symbols-outline.nvim",
+		config = function()
+			require("plug_conf.symbols_outline")
+		end,
+	})
 	use("stevearc/dressing.nvim")
 	use({
 		"ziontee113/icon-picker.nvim",
@@ -360,6 +365,19 @@ require("packer").startup(function(use)
 			require("codicons").setup({})
 		end,
 	})
+	use("myusuf3/numbers.vim")
+	use("lewis6991/impatient.nvim")
+	use({ "michaelb/sniprun", run = "bash ./install.sh" })
+	use({
+		"ellisonleao/glow.nvim",
+		config = function()
+			require("glow").setup({
+				style = "dark",
+				width = 120,
+			})
+		end,
+	})
+
 	-- end
 	if require("packer_bootstrap").packer_bootstrap then
 		require("packer").sync()

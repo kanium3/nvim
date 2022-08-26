@@ -104,6 +104,10 @@ vim.api.nvim_set_keymap('n', '<leader>dl', ':lua require("dap").run_last()<CR>',
 vim.api.nvim_set_keymap('n', '<leader>st', ':ToggleTerm<CR>', { silent = true, noremap = true })
 vim.api.nvim_set_keymap('n', '<leader>gg', ':lua require("plug_conf.toggleterm").lazygit_toggle()<CR>', { silent = true, noremap = true })
 
+vim.api.nvim_set_keymap('n', '<leader>sm', ':NumbersToggle<CR>', { silent = true, noremap = true })
+vim.api.nvim_set_keymap('v', 'sr', '<Plug>SnipRun', {silent = true})
+vim.api.nvim_set_keymap('n', '<leader>so', '<Plug>SnipRunOperator', {silent = true})
+vim.api.nvim_set_keymap('n', '<leader>sr', '<Plug>SnipRun', {silent = true})
 function _G.set_terminal_keymaps()
   local opts = {buffer = 0}
   vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
