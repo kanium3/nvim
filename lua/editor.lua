@@ -13,7 +13,9 @@ set guifont=JetBrains\ Mono:h14.5
 ]])
 
 vim.cmd("syntax on")
-vim.cmd('let g:neovide_cursor_vfx_mode = "railgun"')
+vim.g.neovide_cursor_vfx_mode = "railgun"
+vim.g.neovide_confirm_quit = true
+vim.g.neovide_underline_automatic_scaling = true
 
 -- auto plugin action
 vim.cmd([[autocmd BufWritePost plug_config/main.lua PackerCompile]])

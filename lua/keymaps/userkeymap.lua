@@ -1,5 +1,5 @@
 vim.api.nvim_set_keymap('n', '<leader>t', '<C-w>w', { noremap = true })
-vim.api.nvim_set_keymap('n', '<leader>w', '<Cmd>write<CR>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>ww', '<Cmd>write<CR>', { noremap = true })
 -- NvimTree
 vim.api.nvim_set_keymap('n', '<leader>ss', '<Cmd>NvimTreeToggle<CR>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<leader>rf', '<Cmd>NvimTreeRefresh<CR>', { noremap = true })
@@ -108,6 +108,11 @@ vim.api.nvim_set_keymap('n', '<leader>sm', ':NumbersToggle<CR>', { silent = true
 vim.api.nvim_set_keymap('v', 'sr', '<Plug>SnipRun', {silent = true})
 vim.api.nvim_set_keymap('n', '<leader>so', '<Plug>SnipRunOperator', {silent = true})
 vim.api.nvim_set_keymap('n', '<leader>sr', '<Plug>SnipRun', {silent = true})
+vim.api.nvim_set_keymap('n', '<leader>lrl', '<Plug>(Luadev-RunLine)', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>lr', '<Plug>(Luadev-Run)', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>lrw', '<Plug>(Luadev-RunWord)', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>lc', '<Plug>(Luadev-Complete)', {noremap = true, silent = true})
+
 function _G.set_terminal_keymaps()
   local opts = {buffer = 0}
   vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)

@@ -1,1 +1,4 @@
-# This is kanium's neovim setting
+# This is kanium's neovim setting(kanivim)
+
+## Licence
+MIT 

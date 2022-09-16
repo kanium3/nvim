@@ -30,6 +30,9 @@ treesitter.setup({
 	autotag = {
 		enable = true,
 	},
+	context_commentstring = {
+		enable = true,
+	},
 	textobjects = {
 		select = {
 			enable = true,

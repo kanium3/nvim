@@ -24,20 +24,20 @@ cmp.setup({
 	sources = cmp.config.sources({
 		{ name = "nvim_lsp" },
 		{ name = "luasnip" }, -- For luasnip users.
-		{ name = "nvim_lsp_document_symbol" }
+		{ name = "nvim_lsp_document_symbol" },
+		{ name = "cmp-nvim-lsp-signature-help" },
+	}, {
+		{ name = "path" },
+		{ name = "nvim_lua" },
 	}, {
 		{ name = "buffer" },
-		{ name = "path" },
 		{ name = "skkeleton" },
 		{ name = "crates" },
-		{ name = "cmp-nvim-lsp-signature-help" },
 		{ name = "rg" },
 		{ name = "emoji" },
 		{ name = "calc" },
 		{ name = "omni" },
-		{ name = "nvim_lua" },
-		{ name = "treesitter" }
-
+		{ name = "treesitter" },
 	}),
 	formatting = {
 		format = require("lspkind").cmp_format({
@@ -81,4 +81,3 @@ cmp.setup.cmdline(":", {
 		{ name = "cmdline" },
 	}),
 })
-

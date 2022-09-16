@@ -1,4 +1,5 @@
 local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
+capabilities.textDocument.completion.completionItem.snippetSupport = true
 local lspconfig = require("lspconfig")
 local on_attach = require("lsp.handler")
 local codelldb_path = "/home/kanium/.local/share/nvim/mason/packages/codelldb/extension/adapter/codelldb"
@@ -38,6 +39,24 @@ lspconfig.crystalline.setup({
 	cmd = { "/home/kanium/.local/share/nvim/mason/bin/crystalline", "--stdio" },
 })
 
+lspconfig.cssls.setup({
+	on_attach = on_attach,
+	capabilities = capabilities,
+	cmd = { "/home/kanium/.local/share/nvim/mason/bin/vscode-css-language-server", "--stdio" },
+})
+
+lspconfig.html.setup({
+	on_attach = on_attach,
+	capabilities = capabilities,
+	cmd = { "/home/kanium/.local/share/nvim/mason/bin/vscode-html-language-server", "--stdio" },
+})
+
+lspconfig.tailwindcss.setup({
+	on_attach = on_attach,
+	capabilities = capabilities,
+	cmd = { "/home/kanium/.local/share/nvim/mason/bin/tailwindcss-language-server", "--stdio" },
+})
+
 lspconfig.pyright.setup({
 	on_attach = on_attach,
 	capabilities = capabilities,
@@ -74,11 +93,10 @@ local rust_opts = {
 		cmd = { "/home/kanium/.local/share/nvim/mason/bin/rust-analyzer" },
 	},
 	settings = {
-		['rust-analyzer'] = {
+		["rust-analyzer"] = {
 			checkOnSave = {
 				allFeatures = true,
 				overrideCommand = {
-					"cargo",
 					"clippy",
 				},
 			},

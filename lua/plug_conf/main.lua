@@ -85,7 +85,13 @@ require("packer").startup(function(use)
 		"kdheepak/tabline.nvim",
 		requires = { { "hoob3rt/lualine.nvim", opt = true }, { "kyazdani42/nvim-web-devicons", opt = true } },
 		config = function()
-			require("tabline").setup({ enable = false })
+			require("tabline").setup({
+				enable = false,
+				options = {
+					section_separators = { "", "" },
+					component_separators = { "", "" },
+				},
+			})
 		end,
 	})
 	--LSP
@@ -134,6 +140,10 @@ require("packer").startup(function(use)
 		},
 		{
 			"windwp/nvim-ts-autotag",
+			require = "nvim-treesitter/nvim-treesitter",
+		},
+		{
+			"JoosepAlviste/nvim-ts-context-commentstring",
 			require = "nvim-treesitter/nvim-treesitter",
 		},
 		{
@@ -378,6 +388,33 @@ require("packer").startup(function(use)
 		end,
 	})
 
+	use("bfredl/nvim-luadev")
+	use("navarasu/onedark.nvim")
+	use({
+		"danymat/neogen",
+		config = function()
+			require("neogen").setup({})
+		end,
+		requires = "nvim-treesitter/nvim-treesitter",
+	})
+	use({
+		"s1n7ax/nvim-comment-frame",
+		requires = {
+			{ "nvim-treesitter" },
+		},
+		config = function()
+			require("nvim-comment-frame").setup()
+		end,
+	})
+
+	use("LudoPinelli/comment-box.nvim")
+
+	use({
+		"numToStr/Comment.nvim",
+		config = function()
+			require('Comment').setup()
+		end,
+	})
 	-- end
 	if require("packer_bootstrap").packer_bootstrap then
 		require("packer").sync()
