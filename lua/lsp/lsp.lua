@@ -31,7 +31,17 @@ lspconfig.sumneko_lua.setup({
 	},
 })
 
-lspconfig.prismals.setup({})
+lspconfig.prismals.setup({
+	on_attach = on_attach,
+	capabilities = capabilities,
+	cmd = { "/home/kanium/.local/share/nvim/mason/bin/prisma-language-server", "--stdio" }
+})
+
+lspconfig.taplo.setup {
+	on_attach = on_attach,
+	capabilities = capabilities,
+	cmd = { "/home/kanium/.local/share/nvim/mason/bin/taplo", "lsp", "stdio" }
+}
 
 lspconfig.crystalline.setup({
 	on_attach = on_attach,
