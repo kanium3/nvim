@@ -2,6 +2,7 @@
 
 require("onedark").setup({
 	style = "darker",
+	transparent = true,
 	code_style = {
 		comments = "italic",
 		keywords = "bold",

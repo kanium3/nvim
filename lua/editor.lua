@@ -7,6 +7,9 @@ vim.opt.shiftwidth = 4
 vim.opt.helplang = { "ja", "en" }
 vim.opt.clipboard:append("unnamedplus")
 vim.opt.updatetime = 100
+vim.opt.laststatus = 3
+vim.g.loaded = 1
+vim.g.loaded_netrwPlugin = 1
 -- font
 vim.cmd([[
 set guifont=JetBrains\ Mono:h14.5
@@ -22,6 +25,7 @@ vim.cmd([[autocmd BufWritePost plug_config/main.lua PackerCompile]])
 -- notify
 vim.notify = require("notify")
 -- ui
+vim.cmd([[let g:popui_border_style = "double"]])
 vim.ui.select = require("popui.ui-overrider")
 vim.ui.input = require("popui.input-overrider")
 
@@ -34,3 +38,5 @@ vim.cmd([[augroup highlight_yank
 augroup END]])
 vim.o.background = "dark"
 vim.o.termguicolors = true
+-- lsp
+vim.lsp.set_log_level("debug")

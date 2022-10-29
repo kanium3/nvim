@@ -10,7 +10,11 @@ cmp.setup({
 	},
 
 	window = {
-		completion = cmp.config.window.bordered(),
+		completion = {
+			winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
+			col_offset = -3,
+			side_padding = 0,
+		},
 		documentation = cmp.config.window.bordered(),
 	},
 	mapping = cmp.mapping.preset.insert({
@@ -38,19 +42,25 @@ cmp.setup({
 		{ name = "calc" },
 		{ name = "omni" },
 		{ name = "treesitter" },
+		{ name = "fonts", option = { space_filter = "-" } },
 	}),
 	formatting = {
-		format = require("lspkind").cmp_format({
-			mode = "symbol", -- show only symbol annotations
-			maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+		fields = { "kind", "abbr", "menu" },
+		format = function(entry, vim_item)
+			local kind = require("lspkind").cmp_format({
+				mode = "symbol_text", -- show only symbol annotations
+				maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+			})(entry, vim_item)
+			local strings = vim.split(kind.kind, "%s", { trimempty = true })
+			if strings[1] == "TypeParameter" then
+				strings[1] = ""
+				strings[2] = "Type Parameter"
+			end
+			kind.kind = " " .. strings[1] .. " "
+			kind.menu = "    (" .. strings[2] .. ")"
 
-			-- The function below will be called before any actual modifications from lspkind
-			-- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
-			---@diagnostic disable-next-line: unused-local
-			before = function(entry, vim_item)
-				return vim_item
-			end,
-		}),
+			return kind
+		end,
 	},
 })
 -- Set configuration for specific filetype.

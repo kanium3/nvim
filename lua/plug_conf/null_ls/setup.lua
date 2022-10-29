@@ -30,5 +30,20 @@ null_ls.setup({
 		null_ls.builtins.diagnostics.mypy.with({
 			command = "/home/kanium/.cache/pypoetry/virtualenvs/kanivim-2GwEYoO9-py3.10/bin/mypy",
 		}),
+		null_ls.builtins.diagnostics.eslint.with({
+			extra_filetypes = { "svelte" },
+		}),
+		null_ls.builtins.formatting.prettier.with({
+			extra_filetypes = { "svelte" },
+		}),
+		null_ls.builtins.diagnostics.textlint.with({
+			extra_filetypes = { "markdown" },
+			extra_args = { "--config", vim.call("expand", "~/.config/textlint/.textlintrc.json") }
+		}),
+		null_ls.builtins.formatting.textlint.with({
+			extra_filetypes = { "markdown" },
+			extra_args = { "--config", vim.call("expand", "~/.config/textlint/.textlintrc.json") }
+		}),
+		null_ls.builtins.diagnostics.actionlint,
 	},
 })

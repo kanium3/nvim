@@ -6,6 +6,7 @@ require("packer").startup(function(use)
 	use("rmehri01/onenord.nvim")
 	use({ "shaunsingh/oxocarbon.nvim", run = "./install.sh" })
 	use("folke/tokyonight.nvim")
+	use("navarasu/onedark.nvim")
 	-- denops
 	use("vim-denops/denops.vim")
 	use({
@@ -54,6 +55,7 @@ require("packer").startup(function(use)
 	use("ray-x/cmp-treesitter")
 	use("rinx/cmp-skkeleton")
 	use("lukas-reineke/cmp-rg")
+	use("amarakon/nvim-cmp-fonts")
 	use({
 		"windwp/nvim-autopairs",
 		event = "VimEnter",
@@ -247,6 +249,13 @@ require("packer").startup(function(use)
 	use({
 		"kosayoda/nvim-lightbulb",
 		requires = "antoinemadec/FixCursorHold.nvim",
+		config = function()
+			require("nvim-lightbulb").setup({
+				autocmd = { enabled = true },
+				sign = { enabled = false },
+				virtual_text = { enabled = true },
+			})
+		end,
 	})
 	use({
 		"simrat39/symbols-outline.nvim",
@@ -258,7 +267,9 @@ require("packer").startup(function(use)
 	use({
 		"ziontee113/icon-picker.nvim",
 		config = function()
-			require("icon-picker")
+			require("icon-picker").setup({
+				disable_legacy_commands = true,
+			})
 		end,
 	})
 	use({
@@ -389,7 +400,6 @@ require("packer").startup(function(use)
 	})
 
 	use("bfredl/nvim-luadev")
-	use("navarasu/onedark.nvim")
 	use({
 		"danymat/neogen",
 		config = function()
@@ -415,6 +425,121 @@ require("packer").startup(function(use)
 			require("Comment").setup()
 		end,
 	})
+	use({
+		"zbirenbaum/neodim",
+		event = "LspAttach",
+		config = function()
+			require("neodim").setup({
+				alpha = 0.75,
+				blend_color = "#000000",
+				update_in_insert = {
+					enable = true,
+					delay = 100,
+				},
+				hide = {
+					virtual_text = false,
+					signs = false,
+					underline = false,
+				},
+			})
+		end,
+	})
+
+	use("jubnzv/virtual-types.nvim")
+	use("b0o/SchemaStore.nvim")
+	use({
+		"amrbashir/nvim-docs-view",
+		opt = true,
+		cmd = { "DocsViewToggle" },
+		config = function()
+			require("docs-view").setup({
+				position = "right",
+				width = 60,
+			})
+		end,
+	})
+	use({
+		"andrewferrier/textobj-diagnostic.nvim",
+		config = function()
+			require("textobj-diagnostic").setup()
+		end,
+	})
+	use("AckslD/swenv.nvim")
+	use({
+		"cuducos/yaml.nvim",
+		ft = { "yaml" }, -- optional
+		requires = {
+			"nvim-treesitter/nvim-treesitter",
+		},
+	})
+	use({
+		"xiyaowong/nvim-transparent",
+		config = function()
+			require("transparent").setup({
+				enable = true, -- boolean: enable transparent
+				extra_groups = { -- table/string: additional groups that should be cleared
+					-- In particular, when you set it to 'all', that means all available groups
+					-- example of akinsho/nvim-bufferline.lua
+					"BufferLineTabClose",
+					"BufferlineBufferSelected",
+					"BufferLineFill",
+					"BufferLineBackground",
+					"BufferLineSeparator",
+					"BufferLineIndicatorSelected",
+				},
+				exclude = {}, -- table: groups you don't want to clear
+			})
+		end,
+	})
+	use({
+		"folke/noice.nvim",
+		event = "VimEnter",
+		config = function()
+			require("noice").setup({
+				views = {
+					split = {
+						enter = true,
+					},
+				},
+				lsp_progress = {
+					enabled = false,
+				},
+			})
+		end,
+		requires = {
+			-- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+			"MunifTanjim/nui.nvim",
+			"rcarriga/nvim-notify",
+		},
+	})
+	use({
+		"aznhe21/actions-preview.nvim",
+		requires = "MunifTanjim/nui.nvim",
+		config = function()
+			require("actions-preview").setup({
+				backend = { "nui" },
+				nui = {
+					preview = {
+						win_options = {
+							winhighlight = "Normal:Normal,FloatBorder:FloatBorder",
+						},
+					},
+					select = {
+						win_options = {
+							winhighlight = "Normal:Normal,FloatBorder:FloatBorder",
+						},
+					},
+				},
+			})
+		end,
+	})
+	use({
+		"lvimuser/lsp-inlayhints.nvim",
+		config = function()
+			require("lsp-inlayhints").setup()
+		end,
+	})
+
 	-- end
 	if require("packer_bootstrap").packer_bootstrap then
 		require("packer").sync()

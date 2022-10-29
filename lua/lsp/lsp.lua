@@ -1,4 +1,4 @@
-local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 local lspconfig = require("lspconfig")
 local on_attach = require("lsp.handler")
@@ -27,6 +27,9 @@ lspconfig.sumneko_lua.setup({
 			telemetry = {
 				enable = false,
 			},
+			hint = {
+				enable = true,
+			},
 		},
 	},
 })
@@ -34,14 +37,14 @@ lspconfig.sumneko_lua.setup({
 lspconfig.prismals.setup({
 	on_attach = on_attach,
 	capabilities = capabilities,
-	cmd = { "/home/kanium/.local/share/nvim/mason/bin/prisma-language-server", "--stdio" }
+	cmd = { "/home/kanium/.local/share/nvim/mason/bin/prisma-language-server", "--stdio" },
 })
 
-lspconfig.taplo.setup {
+lspconfig.taplo.setup({
 	on_attach = on_attach,
 	capabilities = capabilities,
-	cmd = { "/home/kanium/.local/share/nvim/mason/bin/taplo", "lsp", "stdio" }
-}
+	cmd = { "/home/kanium/.local/share/nvim/mason/bin/taplo", "lsp", "stdio" },
+})
 
 lspconfig.crystalline.setup({
 	on_attach = on_attach,
@@ -86,6 +89,30 @@ require("typescript").setup({
 		on_attach = on_attach,
 		capabilities = capabilities,
 		cmd = { "/home/kanium/.local/share/nvim/mason/bin/typescript-language-server", "--stdio" },
+		settings = {
+			typescript = {
+				inlayHints = {
+					includeInlayParameterNameHints = "all",
+					includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+					includeInlayFunctionParameterTypeHints = true,
+					includeInlayVariableTypeHints = true,
+					includeInlayPropertyDeclarationTypeHints = true,
+					includeInlayFunctionLikeReturnTypeHints = true,
+					includeInlayEnumMemberValueHints = true,
+				},
+			},
+			javascript = {
+				inlayHints = {
+					includeInlayParameterNameHints = "all",
+					includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+					includeInlayFunctionParameterTypeHints = true,
+					includeInlayVariableTypeHints = true,
+					includeInlayPropertyDeclarationTypeHints = true,
+					includeInlayFunctionLikeReturnTypeHints = true,
+					includeInlayEnumMemberValueHints = true,
+				},
+			},
+		},
 	},
 })
 
@@ -96,7 +123,24 @@ require("flutter-tools").setup({
 	},
 })
 
+lspconfig.svelte.setup({
+	on_attach = on_attach,
+	capabilities = capabilities,
+	cmd = { "/home/kanium/.local/share/nvim/mason/bin/svelteserver", "--stdio" },
+})
+
+lspconfig.sqls.setup({
+	on_attach = on_attach,
+	capabilities = capabilities,
+	cmd = { "/home/kanium/.local/share/nvim/mason/bin/sqls" },
+})
+
 local rust_opts = {
+	tools = {
+		inlay_hints = {
+			auto = false,
+		},
+	},
 	server = {
 		on_attach = on_attach,
 		capabilities = capabilities,
@@ -107,7 +151,12 @@ local rust_opts = {
 			checkOnSave = {
 				allFeatures = true,
 				overrideCommand = {
+					"cargo",
 					"clippy",
+					"--workspace",
+					"--message-format=json",
+					"--all-targets",
+					"--all-features"
 				},
 			},
 		},
@@ -118,3 +167,14 @@ local rust_opts = {
 }
 
 require("rust-tools").setup(rust_opts)
+
+lspconfig.jsonls.setup({
+	on_attach = on_attach,
+	capabilities = capabilities,
+	settings = {
+		json = {
+			schemas = require("schemastore").json.schemas(),
+			validate = { enable = true },
+		},
+	},
+})

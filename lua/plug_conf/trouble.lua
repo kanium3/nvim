@@ -1,3 +1,5 @@
 local trouble = require("trouble")
 
-trouble.setup {}
+trouble.setup {
+	auto_preview = false
+}
