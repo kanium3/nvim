@@ -5,7 +5,7 @@ local on_attach = require("lsp.handler")
 local codelldb_path = "/home/kanium/.local/share/nvim/mason/packages/codelldb/extension/adapter/codelldb"
 local liblldb_path = "/home/kanium/.local/share/nvim/mason/packages/codelldb/extension/lldb/lib/liblldb.so"
 
-lspconfig.sumneko_lua.setup({
+lspconfig.lua_ls.setup({
 	on_attach = on_attach,
 	capabilities = capabilities,
 	cmd = { "/home/kanium/.local/share/nvim/mason/bin/lua-language-server" },
@@ -145,18 +145,19 @@ local rust_opts = {
 		on_attach = on_attach,
 		capabilities = capabilities,
 		cmd = { "/home/kanium/.local/share/nvim/mason/bin/rust-analyzer" },
-	},
-	settings = {
-		["rust-analyzer"] = {
-			checkOnSave = {
-				allFeatures = true,
-				overrideCommand = {
-					"cargo",
-					"clippy",
-					"--workspace",
-					"--message-format=json",
-					"--all-targets",
-					"--all-features"
+		settings = {
+			["rust-analyzer"] = {
+				checkOnSave = {
+					enable = true,
+					allFeatures = true,
+					overrideCommand = {
+						"cargo",
+						"clippy",
+						"--workspace",
+						"--message-format=json",
+						"--all-targets",
+						"--all-features",
+					},
 				},
 			},
 		},
@@ -177,4 +178,10 @@ lspconfig.jsonls.setup({
 			validate = { enable = true },
 		},
 	},
+})
+
+lspconfig.bufls.setup({
+	on_attach = on_attach,
+	capabilities = capabilities,
+	cmd = { "/home/kanium/.local/share/nvim/mason/bin/bufls", "serve" }
 })

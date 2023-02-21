@@ -51,7 +51,7 @@ vim.api.nvim_set_keymap(
 	{ silent = true, noremap = true }
 )
 -- fuzzymotion
-vim.api.nvim_set_keymap("n", "<leader>fm", "<Cmd>FuzzyMotion<CR>", { silent = true, noremap = true })
+vim.api.nvim_set_keymap("n", "s", "<Cmd>FuzzyMotion<CR>", { silent = true, noremap = true })
 -- lsp_lines
 vim.keymap.set("", "<Leader>l", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
 

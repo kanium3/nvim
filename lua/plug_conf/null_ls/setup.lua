@@ -38,12 +38,14 @@ null_ls.setup({
 		}),
 		null_ls.builtins.diagnostics.textlint.with({
 			extra_filetypes = { "markdown" },
-			extra_args = { "--config", vim.call("expand", "~/.config/textlint/.textlintrc.json") }
+			extra_args = { "--config", vim.call("expand", "~/.config/textlint/.textlintrc.json") },
 		}),
 		null_ls.builtins.formatting.textlint.with({
 			extra_filetypes = { "markdown" },
-			extra_args = { "--config", vim.call("expand", "~/.config/textlint/.textlintrc.json") }
+			extra_args = { "--config", vim.call("expand", "~/.config/textlint/.textlintrc.json") },
 		}),
 		null_ls.builtins.diagnostics.actionlint,
+		null_ls.builtins.diagnostics.buf,
+		null_ls.builtins.formatting.buf,
 	},
 })

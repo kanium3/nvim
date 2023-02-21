@@ -8,8 +8,8 @@ vim.opt.helplang = { "ja", "en" }
 vim.opt.clipboard:append("unnamedplus")
 vim.opt.updatetime = 100
 vim.opt.laststatus = 3
-vim.g.loaded = 1
-vim.g.loaded_netrwPlugin = 1
+--vim.g.loaded = 1
+--vim.g.loaded_netrwPlugin = 1
 -- font
 vim.cmd([[
 set guifont=JetBrains\ Mono:h14.5
@@ -40,3 +40,9 @@ vim.o.background = "dark"
 vim.o.termguicolors = true
 -- lsp
 vim.lsp.set_log_level("debug")
+-- fold
+vim.cmd([[
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
+set nofoldenable
+]])

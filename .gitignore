@@ -1,2 +1,5 @@
 # packer.nvim
 plugin/
+
+# lua_ls
+.luarc.json

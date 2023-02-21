@@ -1,11 +1,8 @@
 require("packer").startup(function(use)
+	use("wbthomason/packer.nvim")
 	-- vim help in japanese
 	use("vim-jp/vimdoc-ja")
 	-- color scheme
-	use("olimorris/onedarkpro.nvim")
-	use("rmehri01/onenord.nvim")
-	use({ "shaunsingh/oxocarbon.nvim", run = "./install.sh" })
-	use("folke/tokyonight.nvim")
 	use("navarasu/onedark.nvim")
 	-- denops
 	use("vim-denops/denops.vim")
@@ -24,13 +21,19 @@ require("packer").startup(function(use)
 	use("nvim-lua/popup.nvim")
 	use("nvim-lua/plenary.nvim")
 	-- Rust
-	use("rust-lang/rust.vim")
-	use("simrat39/rust-tools.nvim")
+	use({ "rust-lang/rust.vim", ft = { "rust" } })
+	use({ "simrat39/rust-tools.nvim" })
 	use({
 		"saecki/crates.nvim",
 		requires = { "nvim-lua/plenary.nvim" },
 		config = function()
-			require("crates").setup()
+			local null_ls = require("null-ls")
+			require("crates").setup({
+				null_ls = {
+					enabled = true,
+					name = "crates.nvim"
+				}
+			})
 		end,
 	})
 	-- Snippet
@@ -64,11 +67,16 @@ require("packer").startup(function(use)
 		end,
 	})
 	-- file active
-	use("kyazdani42/nvim-web-devicons")
+	use({
+		"nvim-tree/nvim-web-devicons",
+		config = function()
+			require("plug_conf.nvim_web_devicons")
+		end,
+	})
 	use({
 		"kyazdani42/nvim-tree.lua",
 		requires = {
-			"kyazdani42/nvim-web-devicons", -- for file icon
+			"nvim-tree/nvim-web-devicons", -- for file icon
 		},
 		config = function()
 			require("plug_conf.nvim_tree")
@@ -78,22 +86,16 @@ require("packer").startup(function(use)
 	use("arkav/lualine-lsp-progress")
 	use({
 		"nvim-lualine/lualine.nvim",
-		requires = { "kyazdani42/nvim-web-devicons", opt = true },
+		requires = { "nvim-tree/nvim-web-devicons", opt = true },
 		config = function()
 			require("plug_conf.lualine")
 		end,
 	})
 	use({
 		"kdheepak/tabline.nvim",
-		requires = { { "hoob3rt/lualine.nvim", opt = true }, { "kyazdani42/nvim-web-devicons", opt = true } },
+		requires = { { "hoob3rt/lualine.nvim", opt = true }, { "nvim-tree/nvim-web-devicons", opt = true } },
 		config = function()
-			require("tabline").setup({
-				enable = false,
-				options = {
-					section_separators = { "", "" },
-					component_separators = { "", "" },
-				},
-			})
+			require("plug_conf.tabline")
 		end,
 	})
 	--LSP
@@ -113,7 +115,7 @@ require("packer").startup(function(use)
 	})
 	use({
 		"folke/trouble.nvim",
-		requires = "kyazdani42/nvim-web-devicons",
+		requires = { "nvim-tree/nvim-web-devicons", opt = true },
 		config = function()
 			require("plug_conf.trouble")
 		end,
@@ -215,11 +217,13 @@ require("packer").startup(function(use)
 	use("rcarriga/nvim-notify")
 	use({
 		"uga-rosa/translate.nvim",
+		opt = true,
+		cmd = { "Translate" },
 		config = function()
 			require("plug_conf.translate")
 		end,
 	})
-	use("vim-crystal/vim-crystal")
+	use({ "vim-crystal/vim-crystal", ft = { "crystal" } })
 	use({
 		"akinsho/flutter-tools.nvim",
 		requires = "nvim-lua/plenary.nvim",
@@ -259,6 +263,8 @@ require("packer").startup(function(use)
 	})
 	use({
 		"simrat39/symbols-outline.nvim",
+		opt = true,
+		cmd = { "SymbolsOutline" },
 		config = function()
 			require("plug_conf.symbols_outline")
 		end,
@@ -476,16 +482,9 @@ require("packer").startup(function(use)
 		"xiyaowong/nvim-transparent",
 		config = function()
 			require("transparent").setup({
-				enable = true, -- boolean: enable transparent
+				enable = false, -- boolean: enable transparent
 				extra_groups = { -- table/string: additional groups that should be cleared
-					-- In particular, when you set it to 'all', that means all available groups
-					-- example of akinsho/nvim-bufferline.lua
-					"BufferLineTabClose",
-					"BufferlineBufferSelected",
-					"BufferLineFill",
-					"BufferLineBackground",
-					"BufferLineSeparator",
-					"BufferLineIndicatorSelected",
+					"all",
 				},
 				exclude = {}, -- table: groups you don't want to clear
 			})
@@ -501,8 +500,24 @@ require("packer").startup(function(use)
 						enter = true,
 					},
 				},
-				lsp_progress = {
-					enabled = false,
+				lsp = {
+					progress = {
+						enabled = false,
+					},
+					signature = {
+						enabled = false,
+					},
+					override = {
+						["vim.lsp.util.convert_input_to_markdown_lines"] = false,
+						["vim.lsp.util.stylize_markdown"] = false,
+						["cmp.entry.get_documentation"] = false,
+					},
+				},
+				presets = {
+					command_palette = true, -- position the cmdline and popupmenu together
+					long_message_to_split = true, -- long messages will be sent to a split
+					inc_rename = false, -- enables an input dialog for inc-rename.nvim
+					lsp_doc_border = false, -- add a border to hover docs and signature help
 				},
 			})
 		end,
@@ -520,14 +535,10 @@ require("packer").startup(function(use)
 				backend = { "nui" },
 				nui = {
 					preview = {
-						win_options = {
-							winhighlight = "Normal:Normal,FloatBorder:FloatBorder",
-						},
+						win_options = {},
 					},
 					select = {
-						win_options = {
-							winhighlight = "Normal:Normal,FloatBorder:FloatBorder",
-						},
+						win_options = {},
 					},
 				},
 			})
@@ -537,6 +548,12 @@ require("packer").startup(function(use)
 		"lvimuser/lsp-inlayhints.nvim",
 		config = function()
 			require("lsp-inlayhints").setup()
+		end,
+	})
+	use({
+		"Omochice/dps-codic-vim",
+		config = function()
+			vim.cmd([[let g:dps_codic_casing = "lower underscore"]])
 		end,
 	})
 

@@ -14,6 +14,8 @@ local on_attach = function(client, bufnr)
 	end
 
 	if client.server_capabilities.inlayHintProvider then
+		
+		require("lsp-inlayhints").setup(config)
 		require("lsp-inlayhints").on_attach(client, bufnr)
 	end
 

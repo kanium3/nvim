@@ -1,7 +1,12 @@
----@diagnostic disable: need-check-nil
+---@diagnostic disable: need-check-nil, redundant-parameter
 local cmp = require("cmp")
 
+vim.cmd([[set completeopt=menu,menuone,noselect]])
+
 cmp.setup({
+	view = {
+		entries = "custom",
+	},
 	snippet = {
 		-- REQUIRED - you must specify a snippet engine
 		expand = function(args)
@@ -28,16 +33,14 @@ cmp.setup({
 	sources = cmp.config.sources({
 		{ name = "nvim_lsp" },
 		{ name = "luasnip" }, -- For luasnip users.
-		{ name = "nvim_lsp_document_symbol" },
 		{ name = "cmp-nvim-lsp-signature-help" },
 	}, {
 		{ name = "path" },
 		{ name = "nvim_lua" },
-	}, {
 		{ name = "buffer" },
 		{ name = "skkeleton" },
 		{ name = "crates" },
-		{ name = "rg" },
+		{ name = "rg", keyword_length = 3 },
 		{ name = "emoji" },
 		{ name = "calc" },
 		{ name = "omni" },
@@ -73,7 +76,7 @@ cmp.setup.filetype("gitcommit", {
 })
 
 -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
-cmp.setup.cmdline("/", {
+cmp.setup.cmdline({ "/", "?" }, {
 	mapping = cmp.mapping.preset.cmdline(),
 	sources = cmp.config.sources({
 		{ name = "nvim_lsp_document_symbol" },
