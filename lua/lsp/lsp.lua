@@ -1,5 +1,10 @@
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+-- https://github.com/hrsh7th/cmp-nvim-lsp/issues/53
+local tsserver_capabilities = capabilities
+tsserver_capabilities.textDocument.completion.completionItem.insertReplaceSupport = false
+
 local lspconfig = require("lspconfig")
 local on_attach = require("lsp.handler")
 local codelldb_path = "/home/kanium/.local/share/nvim/mason/packages/codelldb/extension/adapter/codelldb"
@@ -33,6 +38,7 @@ lspconfig.lua_ls.setup({
 		},
 	},
 })
+
 
 lspconfig.prismals.setup({
 	on_attach = on_attach,
@@ -83,34 +89,30 @@ lspconfig.elixirls.setup({
 	cmd = { "/home/kanium/.local/share/nvim/mason/packages/elixir-ls/language_server.sh" },
 })
 
----@diagnostic disable-next-line: undefined-field
-require("typescript").setup({
-	server = { -- pass options to lspconfig's setup method
-		on_attach = on_attach,
-		capabilities = capabilities,
-		cmd = { "/home/kanium/.local/share/nvim/mason/bin/typescript-language-server", "--stdio" },
-		settings = {
-			typescript = {
-				inlayHints = {
-					includeInlayParameterNameHints = "all",
-					includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-					includeInlayFunctionParameterTypeHints = true,
-					includeInlayVariableTypeHints = true,
-					includeInlayPropertyDeclarationTypeHints = true,
-					includeInlayFunctionLikeReturnTypeHints = true,
-					includeInlayEnumMemberValueHints = true,
-				},
+lspconfig.tsserver.setup({
+	on_attach = on_attach,
+	capabilities = tsserver_capabilities,
+	settings = {
+		typescript = {
+			inlayHints = {
+				includeInlayParameterNameHints = "all",
+				includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+				includeInlayFunctionParameterTypeHints = true,
+				includeInlayVariableTypeHints = true,
+				includeInlayPropertyDeclarationTypeHints = true,
+				includeInlayFunctionLikeReturnTypeHints = true,
+				includeInlayEnumMemberValueHints = true,
 			},
-			javascript = {
-				inlayHints = {
-					includeInlayParameterNameHints = "all",
-					includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-					includeInlayFunctionParameterTypeHints = true,
-					includeInlayVariableTypeHints = true,
-					includeInlayPropertyDeclarationTypeHints = true,
-					includeInlayFunctionLikeReturnTypeHints = true,
-					includeInlayEnumMemberValueHints = true,
-				},
+		},
+		javascript = {
+			inlayHints = {
+				includeInlayParameterNameHints = "all",
+				includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+				includeInlayFunctionParameterTypeHints = true,
+				includeInlayVariableTypeHints = true,
+				includeInlayPropertyDeclarationTypeHints = true,
+				includeInlayFunctionLikeReturnTypeHints = true,
+				includeInlayEnumMemberValueHints = true,
 			},
 		},
 	},
@@ -128,11 +130,10 @@ lspconfig.svelte.setup({
 	capabilities = capabilities,
 	cmd = { "/home/kanium/.local/share/nvim/mason/bin/svelteserver", "--stdio" },
 })
-
-lspconfig.sqls.setup({
+lspconfig.sqlls.setup({
 	on_attach = on_attach,
 	capabilities = capabilities,
-	cmd = { "/home/kanium/.local/share/nvim/mason/bin/sqls" },
+	cmd = { "/home/kanium/.local/share/nvim/mason/bin/sql-language-server", "up", "--method", "stdio" },
 })
 
 local rust_opts = {
@@ -147,9 +148,9 @@ local rust_opts = {
 		cmd = { "/home/kanium/.local/share/nvim/mason/bin/rust-analyzer" },
 		settings = {
 			["rust-analyzer"] = {
-				checkOnSave = {
-					enable = true,
-					allFeatures = true,
+				checkOnSave = true,
+				check = {
+					features = "all",
 					overrideCommand = {
 						"cargo",
 						"clippy",
@@ -183,5 +184,23 @@ lspconfig.jsonls.setup({
 lspconfig.bufls.setup({
 	on_attach = on_attach,
 	capabilities = capabilities,
-	cmd = { "/home/kanium/.local/share/nvim/mason/bin/bufls", "serve" }
+	cmd = { "/home/kanium/.local/share/nvim/mason/bin/bufls", "serve" },
+})
+
+lspconfig.yamlls.setup({
+	on_attach = on_attach,
+	capabilities = capabilities,
+	cmd = { "/home/kanium/.local/share/nvim/mason/bin/yaml-language-server", "--stdio" },
+})
+
+lspconfig.bashls.setup({
+	on_attach = on_attach,
+	capabilities = capabilities,
+	cmd = { "/home/kanium/.local/share/nvim/mason/bin/bash-language-server", "start" },
+})
+
+require("lspconfig").graphql.setup({
+	on_attach = on_attach,
+	capabilities = capabilities,
+	cmd = { "/home/kanium/.local/share/nvim/mason/bin/graphql-lsp", "server", "-m", "stream" },
 })

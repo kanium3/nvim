@@ -1,5 +1,10 @@
 local on_attach = function(client, bufnr)
-	require("lsp_signature").on_attach()
+	require("lsp_signature").on_attach({
+		bind = true,
+		handler_opts = {
+			border = "rounded",
+		},
+	}, bufnr)
 
 	if client.server_capabilities.documentSymbolProvider then
 		require("nvim-navic").attach(client, bufnr)
@@ -13,11 +18,11 @@ local on_attach = function(client, bufnr)
 		require("virtualtypes").on_attach(client, bufnr)
 	end
 
-	if client.server_capabilities.inlayHintProvider then
-		
-		require("lsp-inlayhints").setup(config)
-		require("lsp-inlayhints").on_attach(client, bufnr)
+	if client.name == "tsserver" then
+		client.server_capabilities.semanticTokensProvider = nil
+		client.server_capabilities.documentFormattingProvider = false
 	end
+
 
 	local function buf_set_keymap(...)
 		vim.api.nvim_buf_set_keymap(bufnr, ...)

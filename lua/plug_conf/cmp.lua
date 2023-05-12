@@ -1,19 +1,21 @@
 ---@diagnostic disable: need-check-nil, redundant-parameter
 local cmp = require("cmp")
 
-vim.cmd([[set completeopt=menu,menuone,noselect]])
+--vim.cmd([[set completeopt=menu,menuone,noselect]])
 
 cmp.setup({
 	view = {
 		entries = "custom",
 	},
+	completion = {
+		completeopt = "menu,menuone,noinsert",
+	},
 	snippet = {
-		-- REQUIRED - you must specify a snippet engine
 		expand = function(args)
+			-- REQUIRED - you must specify a snippet engine
 			require("luasnip").lsp_expand(args.body) -- For `luasnip` users.
 		end,
 	},
-
 	window = {
 		completion = {
 			winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
@@ -28,24 +30,23 @@ cmp.setup({
 		---@diagnostic disable-next-line: missing-parameter
 		["<C-Space>"] = cmp.mapping.complete(),
 		["<C-e>"] = cmp.mapping.abort(),
-		["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+		["<CR>"] = cmp.mapping.confirm({ select = true }),
 	}),
 	sources = cmp.config.sources({
 		{ name = "nvim_lsp" },
 		{ name = "luasnip" }, -- For luasnip users.
-		{ name = "cmp-nvim-lsp-signature-help" },
 	}, {
 		{ name = "path" },
 		{ name = "nvim_lua" },
 		{ name = "buffer" },
 		{ name = "skkeleton" },
 		{ name = "crates" },
-		{ name = "rg", keyword_length = 3 },
+		{ name = "rg",        keyword_length = 3 },
 		{ name = "emoji" },
 		{ name = "calc" },
 		{ name = "omni" },
 		{ name = "treesitter" },
-		{ name = "fonts", option = { space_filter = "-" } },
+		{ name = "fonts",     option = { space_filter = "-" } },
 	}),
 	formatting = {
 		fields = { "kind", "abbr", "menu" },
@@ -53,17 +54,25 @@ cmp.setup({
 			local kind = require("lspkind").cmp_format({
 				mode = "symbol_text", -- show only symbol annotations
 				maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+				ellipsis_char = "...",
 			})(entry, vim_item)
 			local strings = vim.split(kind.kind, "%s", { trimempty = true })
 			if strings[1] == "TypeParameter" then
 				strings[1] = ""
 				strings[2] = "Type Parameter"
 			end
-			kind.kind = " " .. strings[1] .. " "
-			kind.menu = "    (" .. strings[2] .. ")"
+			if strings[1] == "String" then
+				strings[1] = ""
+				strings[2] = "String"
+			end
+			kind.kind = " " .. (strings[1] or "") .. " "
+			kind.menu = "    (" .. (strings[2] or "") .. ")"
 
 			return kind
 		end,
+	},
+	experimental = {
+		ghost_text = true,
 	},
 })
 -- Set configuration for specific filetype.

@@ -1,12 +1,15 @@
 vim.api.nvim_set_keymap("n", "<leader>t", "<C-w>w", { noremap = true })
 vim.api.nvim_set_keymap("n", "<leader>ww", "<Cmd>write<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "<leader>pp", "<cmd>lua require('fzf-lua').files()<CR>", { silent = true })
 -- NvimTree
 vim.api.nvim_set_keymap("n", "<leader>ss", "<Cmd>NvimTreeToggle<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "<leader>rf", "<Cmd>NvimTreeRefresh<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "<leader>ff", "<Cmd>NvimTreeFindFile<CR>", { noremap = true })
--- Tabline
-vim.api.nvim_set_keymap("n", "<leader>n", "<Cmd>TablineBufferNext<CR>", { noremap = true })
-vim.api.nvim_set_keymap("n", "<leader>pp", "<Cmd>TablineBufferPrevious<CR>", { noremap = true })
+-- buffer
+vim.api.nvim_set_keymap("n", "<C-h>", "<Cmd>bprev<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "<C-l>", "<Cmd>bnext<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "<leader>cc", "<Cmd>bd<CR>", { noremap = true })
+
 -- SKK
 vim.keymap.set({ "i", "c" }, "<C-j>", "<Plug>(skkeleton-toggle)")
 -- minimap
@@ -41,8 +44,8 @@ vim.api.nvim_set_keymap(
 -- translate
 vim.api.nvim_set_keymap("n", "<leader>tr", ":Translate EN -output=replace<CR>", { silent = true, noremap = true })
 vim.api.nvim_set_keymap("x", "<leader>tr", ":Translate EN -output=replace<CR>", { silent = true, noremap = true })
-vim.api.nvim_set_keymap("n", "<leader>te", ":Translate JA<CR>", { silent=true, noremap=true })
-vim.api.nvim_set_keymap("x", "<leader>te", ":Translate JA<CR>", { silent=true, noremap=true })
+vim.api.nvim_set_keymap("n", "<leader>te", ":Translate JA<CR>", { silent = true, noremap = true })
+vim.api.nvim_set_keymap("x", "<leader>te", ":Translate JA<CR>", { silent = true, noremap = true })
 -- popui
 vim.api.nvim_set_keymap(
 	"n",

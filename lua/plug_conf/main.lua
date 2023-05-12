@@ -31,22 +31,28 @@ require("packer").startup(function(use)
 			require("crates").setup({
 				null_ls = {
 					enabled = true,
-					name = "crates.nvim"
-				}
+					name = "crates.nvim",
+				},
 			})
 		end,
 	})
 	-- Snippet
 	use({
-		"L3MON4D3/LuaSnip",
 		"saadparwaiz1/cmp_luasnip",
 		"rafamadriz/friendly-snippets",
 	})
+	use({
+		"L3MON4D3/LuaSnip",
+		run = "make install_jsregexp",
+		dependencies = { "rafamadriz/friendly-snippets" },
+		config = function()
+			require("luasnip.loaders.from_vscode").lazy_load()
+		end,
+	})
 	-- nvim-cmp
 	use("hrsh7th/nvim-cmp")
-	use("hrsh7th/cmp-vsnip")
 	use("hrsh7th/cmp-nvim-lsp")
-	use("hrsh7th/cmp-nvim-lsp-signature-help")
+	--use("hrsh7th/cmp-nvim-lsp-signature-help")
 	use("hrsh7th/cmp-nvim-lsp-document-symbol")
 	use("hrsh7th/cmp-buffer")
 	use("hrsh7th/cmp-path")
@@ -183,7 +189,6 @@ require("packer").startup(function(use)
 		end,
 	})
 
-	use("jose-elias-alvarez/typescript.nvim")
 	use({
 		"wfxr/minimap.vim",
 		run = ":!cargo install --locked code-minimap",
@@ -479,18 +484,6 @@ require("packer").startup(function(use)
 		},
 	})
 	use({
-		"xiyaowong/nvim-transparent",
-		config = function()
-			require("transparent").setup({
-				enable = false, -- boolean: enable transparent
-				extra_groups = { -- table/string: additional groups that should be cleared
-					"all",
-				},
-				exclude = {}, -- table: groups you don't want to clear
-			})
-		end,
-	})
-	use({
 		"folke/noice.nvim",
 		event = "VimEnter",
 		config = function()
@@ -508,16 +501,16 @@ require("packer").startup(function(use)
 						enabled = false,
 					},
 					override = {
-						["vim.lsp.util.convert_input_to_markdown_lines"] = false,
-						["vim.lsp.util.stylize_markdown"] = false,
-						["cmp.entry.get_documentation"] = false,
+						["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+						["vim.lsp.util.stylize_markdown"] = true,
+						["cmp.entry.get_documentation"] = true,
 					},
 				},
 				presets = {
 					command_palette = true, -- position the cmdline and popupmenu together
 					long_message_to_split = true, -- long messages will be sent to a split
 					inc_rename = false, -- enables an input dialog for inc-rename.nvim
-					lsp_doc_border = false, -- add a border to hover docs and signature help
+					lsp_doc_border = true, -- add a border to hover docs and signature help
 				},
 			})
 		end,
@@ -548,6 +541,19 @@ require("packer").startup(function(use)
 		"lvimuser/lsp-inlayhints.nvim",
 		config = function()
 			require("lsp-inlayhints").setup()
+			vim.api.nvim_create_augroup("LspAttach_inlayhints", {})
+			vim.api.nvim_create_autocmd("LspAttach", {
+				group = "LspAttach_inlayhints",
+				callback = function(args)
+					if not (args.data and args.data.client_id) then
+						return
+					end
+
+					local bufnr = args.buf
+					local client = vim.lsp.get_client_by_id(args.data.client_id)
+					require("lsp-inlayhints").on_attach(client, bufnr)
+				end,
+			})
 		end,
 	})
 	use({
@@ -557,6 +563,38 @@ require("packer").startup(function(use)
 		end,
 	})
 
+	use({
+		"folke/todo-comments.nvim",
+		requires = "nvim-lua/plenary.nvim",
+		config = function()
+			require("todo-comments").setup({})
+		end,
+	})
+
+	use({
+		"lotabout/skim",
+		run = "./install",
+	})
+	use("lotabout/skim.vim")
+	use({
+		"ibhagwan/fzf-lua",
+		-- optional for icon support
+		requires = { "nvim-tree/nvim-web-devicons" },
+		config = function()
+			require("fzf-lua").setup({
+				"skim",
+				previewers = {
+					builtin = {
+						extensions = {
+							-- neovim terminal only supports `viu` block output
+							["png"] = { "viu", "-b" },
+							["jpg"] = { "viu", "-b" },
+						},
+					},
+				},
+			})
+		end,
+	})
 	-- end
 	if require("packer_bootstrap").packer_bootstrap then
 		require("packer").sync()

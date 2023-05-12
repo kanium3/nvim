@@ -33,6 +33,10 @@ null_ls.setup({
 		null_ls.builtins.diagnostics.eslint.with({
 			extra_filetypes = { "svelte" },
 		}),
+		null_ls.builtins.code_actions.eslint.with({
+
+			extra_filetypes = { "svelte" },
+		}),
 		null_ls.builtins.formatting.prettier.with({
 			extra_filetypes = { "svelte" },
 		}),
@@ -47,5 +51,8 @@ null_ls.setup({
 		null_ls.builtins.diagnostics.actionlint,
 		null_ls.builtins.diagnostics.buf,
 		null_ls.builtins.formatting.buf,
+		null_ls.builtins.code_actions.shellcheck,
+		null_ls.builtins.diagnostics.shellcheck,
+		null_ls.builtins.formatting.shfmt,
 	},
 })

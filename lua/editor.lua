@@ -39,7 +39,7 @@ augroup END]])
 vim.o.background = "dark"
 vim.o.termguicolors = true
 -- lsp
-vim.lsp.set_log_level("debug")
+--vim.lsp.set_log_level("debug")
 -- fold
 vim.cmd([[
 set foldmethod=expr
