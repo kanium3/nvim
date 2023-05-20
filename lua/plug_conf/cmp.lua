@@ -17,12 +17,7 @@ cmp.setup({
 		end,
 	},
 	window = {
-		completion = {
-			winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
-			col_offset = -3,
-			side_padding = 0,
-		},
-		documentation = cmp.config.window.bordered(),
+		completion = cmp.config.window.bordered(),
 	},
 	mapping = cmp.mapping.preset.insert({
 		["<C-b>"] = cmp.mapping.scroll_docs(-4),
@@ -37,16 +32,16 @@ cmp.setup({
 		{ name = "luasnip" }, -- For luasnip users.
 	}, {
 		{ name = "path" },
-		{ name = "nvim_lua" },
+		--{ name = "nvim_lua" },
 		{ name = "buffer" },
 		{ name = "skkeleton" },
 		{ name = "crates" },
-		{ name = "rg",        keyword_length = 3 },
+		{ name = "rg", keyword_length = 3 },
 		{ name = "emoji" },
-		{ name = "calc" },
-		{ name = "omni" },
-		{ name = "treesitter" },
-		{ name = "fonts",     option = { space_filter = "-" } },
+		--{ name = "calc" },
+		--{ name = "omni" },
+		--{ name = "treesitter" },
+		{ name = "fonts", option = { space_filter = "-" } },
 	}),
 	formatting = {
 		fields = { "kind", "abbr", "menu" },
@@ -70,9 +65,6 @@ cmp.setup({
 
 			return kind
 		end,
-	},
-	experimental = {
-		ghost_text = true,
 	},
 })
 -- Set configuration for specific filetype.

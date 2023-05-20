@@ -1,3 +1,4 @@
+require("nvim-autopairs").setup {}
 local ok, cmp = pcall(require, "cmp")
 if ok then
 	local cmp_autopairs = require("nvim-autopairs.completion.cmp")
