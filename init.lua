@@ -1,13 +1,7 @@
--- nvim-tree setting
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
+require("bootstrap")
+require("editor")
 
--- packer.nvim bootstrap
-require("packer_bootstrap")
+require("lazy").setup("plugins",{})
 
--- neovim cache plugin
-require('impatient')
-
--- modules
-require("mod")
-
+require("keymap")
+vim.cmd("colorscheme onedark")
