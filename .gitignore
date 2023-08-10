@@ -1,5 +1,4 @@
-# packer.nvim
-plugin/
-
 # lua_ls
 .luarc.json
+# lazy.nvim
+lazy-lock.json
