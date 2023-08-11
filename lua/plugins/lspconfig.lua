@@ -5,7 +5,8 @@ return {
         "williamboman/mason-lspconfig.nvim",
         dependencies = {
             'williamboman/mason.nvim',
-            "simrat39/rust-tools.nvim"
+            "simrat39/rust-tools.nvim",
+            "aznhe21/actions-preview.nvim",
         },
         config = function()
             require("mason").setup()
@@ -36,7 +37,7 @@ return {
                     vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>')
                     vim.keymap.set('n', 'gt', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
                     vim.keymap.set('n', 'rn', '<cmd>lua vim.lsp.buf.rename()<CR>')
-                    vim.keymap.set('n', 'ca', '<cmd>lua vim.lsp.buf.code_action()<CR>')
+                    vim.keymap.set({ 'v', 'n' }, 'ca', require("actions-preview").code_actions)
                     vim.keymap.set('n', 'ge', '<cmd>lua vim.diagnostic.open_float()<CR>')
                     vim.keymap.set('n', 'g]', '<cmd>lua vim.diagnostic.goto_next()<CR>')
                     vim.keymap.set('n', 'g[', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
