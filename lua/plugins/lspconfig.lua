@@ -5,23 +5,31 @@ return {
         "williamboman/mason-lspconfig.nvim",
         dependencies = {
             'williamboman/mason.nvim',
-            "simrat39/rust-tools.nvim",
+            { "simrat39/rust-tools.nvim", ft = { "rust" } },
             "aznhe21/actions-preview.nvim",
+            "SmiteshP/nvim-navic"
         },
         config = function()
             require("mason").setup()
             local capabilities = require("cmp_nvim_lsp").default_capabilities()
             local mason_lspconfig = require("mason-lspconfig")
+            local on_attach = function(client, bufnr)
+                if client.server_capabilities["documentSymbolProvider"] then
+                    require("nvim-navic").attach(client, bufnr)
+                end
+            end
             mason_lspconfig.setup_handlers {
                 function(server_name)
                     require("lspconfig")[server_name].setup {
-                        capabilities = capabilities
+                        capabilities = capabilities,
+                        on_attach = on_attach
                     }
                 end,
                 ["rust_analyzer"] = function()
                     require("rust-tools").setup({
                         server = {
-                            capabilities = capabilities
+                            capabilities = capabilities,
+                            on_attach = on_attach
                         }
                     })
                 end

@@ -1,6 +1,7 @@
 -- WARNING: plugins that depend on denops.vim should not be lazy loaded with lazy.nvim configuration
 return {
     {
+        --please see: https://github.com/vim-denops/denops.vim/issues/272
         'vim-denops/denops.vim',
         event = "VeryLazy"
     },
@@ -17,7 +18,7 @@ return {
             vim.fn["denops#plugin#register"]("skkeleton")
 
             vim.fn["skkeleton#config"] {
-                useSkkServer = false
+                useSkkServer = true
             }
         end
     },
