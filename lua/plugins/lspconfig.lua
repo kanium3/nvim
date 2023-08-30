@@ -5,7 +5,6 @@ return {
         "williamboman/mason-lspconfig.nvim",
         dependencies = {
             'williamboman/mason.nvim',
-            { "simrat39/rust-tools.nvim", ft = { "rust" } },
             "aznhe21/actions-preview.nvim",
             "SmiteshP/nvim-navic"
         },
@@ -25,14 +24,7 @@ return {
                         on_attach = on_attach
                     }
                 end,
-                ["rust_analyzer"] = function()
-                    require("rust-tools").setup({
-                        server = {
-                            capabilities = capabilities,
-                            on_attach = on_attach
-                        }
-                    })
-                end
+                ["rust_analyzer"] = function() end
 
             }
             vim.api.nvim_create_autocmd("LspAttach", {
