@@ -1,7 +1,11 @@
 return {
     {
         "nvim-treesitter/nvim-treesitter",
-        build = ":TSUpdate",
+        build = function ()
+            if not jit.os == "Windows" then
+                vim.cmd("TSUpdate")
+            end
+        end,
         event = { 'BufNewFile', 'BufRead' },
         dependencies = {
             "nvim-treesitter/nvim-treesitter-textobjects"
