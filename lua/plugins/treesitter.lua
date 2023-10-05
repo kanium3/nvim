@@ -2,6 +2,7 @@ return {
     {
         "nvim-treesitter/nvim-treesitter",
         build = function ()
+            -- On Windows you have to do it manually
             if not jit.os == "Windows" then
                 vim.cmd("TSUpdate")
             end
