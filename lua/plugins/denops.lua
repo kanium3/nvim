@@ -45,5 +45,15 @@ return {
             vim.fn["denops#plugin#register"]("fuzzy-motion")
             vim.g.fuzzy_motion_matchers = { "fzf", "kensaku" }
         end
+    },
+    {
+        "lambdalisue/gin.vim",
+        cmd = "Gin",
+        dependencies = {
+            "vim-denops/denops.vim",
+        },
+        config = function()
+            vim.fn["denops#plugin#register"]("gin")
+        end
     }
 }
