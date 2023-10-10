@@ -7,6 +7,7 @@ return {
         "hrsh7th/cmp-nvim-lsp",
         "hrsh7th/cmp-buffer",
         "hrsh7th/cmp-cmdline",
+        "FelipeLema/cmp-async-path"
     },
     config = function()
         -- From https://github.com/hrsh7th/nvim-cmp
@@ -33,7 +34,7 @@ return {
                 { name = "luasnip" }, -- For luasnip users.
             }, {
                 { name = "buffer" },
-                { name = "path" },
+                { name = "async_path" },
             }),
         })
         cmp.setup.filetype("gitcommit", {

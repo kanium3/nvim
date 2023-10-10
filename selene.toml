@@ -1,0 +1,2 @@
+[config]
+unscoped_variables = { ignore_pattern = "vim" }
