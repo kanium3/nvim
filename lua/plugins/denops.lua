@@ -41,19 +41,11 @@ return {
         keys = {
             { "<leader>fz", "<Cmd>FuzzyMotion<CR>", desc = "fuzzy finder" }
         },
+        init = function ()
+            vim.g.fuzzy_motion_matchers = { "fzf", "kensaku" }
+        end,
         config = function()
             vim.fn["denops#plugin#register"]("fuzzy-motion")
-            vim.g.fuzzy_motion_matchers = { "fzf", "kensaku" }
         end
     },
-    {
-        "lambdalisue/gin.vim",
-        cmd = "Gin",
-        dependencies = {
-            "vim-denops/denops.vim",
-        },
-        config = function()
-            vim.fn["denops#plugin#register"]("gin")
-        end
-    }
 }
