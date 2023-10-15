@@ -7,7 +7,8 @@ return {
         "hrsh7th/cmp-nvim-lsp",
         "hrsh7th/cmp-buffer",
         "hrsh7th/cmp-cmdline",
-        "FelipeLema/cmp-async-path"
+        "FelipeLema/cmp-async-path",
+        "hrsh7th/cmp-nvim-lsp-signature-help"
     },
     config = function()
         -- From https://github.com/hrsh7th/nvim-cmp
@@ -35,11 +36,12 @@ return {
             }, {
                 { name = "buffer" },
                 { name = "async_path" },
+                { name = 'nvim_lsp_signature_help' }
             }),
         })
         cmp.setup.filetype("gitcommit", {
             sources = cmp.config.sources({
-                { name = "git" }, -- You can specify the `git` source if [you were installed it](https://github.com/petertriho/cmp-git).
+                -- { name = "git" }, -- You can specify the `git` source if [you were installed it](https://github.com/petertriho/cmp-git).
             }, {
                 { name = "buffer" },
             }),
@@ -57,7 +59,7 @@ return {
         cmp.setup.cmdline(":", {
             mapping = cmp.mapping.preset.cmdline(),
             sources = cmp.config.sources({
-                { name = "path" },
+                { name = "async_path" },
             }, {
                 { name = "cmdline" },
             }),
