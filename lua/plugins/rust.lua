@@ -3,7 +3,7 @@ return {
     ft = { "rust" },
     event = { "LspAttach" },
     dependencies = {
-        "SmiteshP/nvim-navic"
+        "SmiteshP/nvim-navic",
     },
     config = function()
         local capabilities = require("cmp_nvim_lsp").default_capabilities()
@@ -15,8 +15,16 @@ return {
         require("rust-tools").setup({
             server = {
                 capabilities = capabilities,
-                on_attach = on_attach
-            }
+                on_attach = on_attach,
+                settings = {
+                    ["rust-analyzer"] = {
+                        -- enable clippy on save
+                        checkOnSave = {
+                            command = "clippy",
+                        },
+                    },
+                },
+            },
         })
-    end
+    end,
 }
