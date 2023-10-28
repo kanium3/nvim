@@ -1,6 +1,6 @@
 return {
     "rebelot/terminal.nvim",
-    cmd = { "Mail" },
+    cmd = { "Mail","Music" },
     config = function()
         require("terminal").setup()
         require("config.tui")
