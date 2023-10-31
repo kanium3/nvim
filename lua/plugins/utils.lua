@@ -1,10 +1,11 @@
 return {
-	{
-		"jghauser/mkdir.nvim",
-		event = { "VeryLazy" },
-	},
-	{
-		"nvim-lua/plenary.nvim",
-		lazy = true,
-	},
+    {
+        "jghauser/mkdir.nvim",
+        event = { "VeryLazy" },
+    },
+    {
+        "nvim-lua/plenary.nvim",
+        lazy = true,
+        module = true,
+    },
 }
