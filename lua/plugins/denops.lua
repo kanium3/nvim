@@ -17,9 +17,30 @@ return {
             -- Lazy loaded by using this function
             vim.fn["denops#plugin#register"]("skkeleton")
 
-            vim.fn["skkeleton#config"] {
-                useSkkServer = true
-            }
+            if not jit.os == 'Windows' then
+                vim.fn["skkeleton#config"] {
+                    useSkkServer = true
+                }
+            else
+                local windows_home = vim.fn.expand("~") -- ex:C://home/annko
+                vim.fn["skkeleton#config"] {
+                    globalDictionaries = {
+                        windows_home .. "/skk/SKK-JISYO.L/SKK-JISYO.L",
+                        windows_home .. "/skk/SKK-JISYO.geo/SKK-JISYO.geo",
+                        windows_home .. "/skk/SKK-JISYO.jinmei/SKK-JISYO.jinmei",
+                        windows_home .. "/skk/SKK-JISYO.assoc/SKK-JISYO.assoc",
+                        windows_home .. "/skk/SKK-JISYO.station/SKK-JISYO.station",
+                        windows_home .. "/skk/SKK-JISYO.fullname/SKK-JISYO.fullname",
+                        windows_home .. "/skk/SKK-JISYO.propernoun/SKK-JISYO.propernoun",
+                        windows_home .. "/skk/SKK-JISYO.th.lisp-r12/SKK-JISYO.th.lisp-r12/SKK-JISYO.th.lisp",
+                        windows_home .. "/skk/SKK-JISYO.th.lisp-r12/SKK-JISYO.th.lisp-r12/SKK-JISYO.th-term.lisp",
+                        windows_home .. "/skk/SKK-JISYO.th.lisp-r12/SKK-JISYO.th.lisp-r12/SKK-JISYO.th-music.lisp",
+                        windows_home .. "/skk/SKK-JISYO.th.lisp-r12/SKK-JISYO.th.lisp-r12/SKK-JISYO.th-product.lisp",
+                        windows_home .. "/skk/SKK-JISYO.th.lisp-r12/SKK-JISYO.th.lisp-r12/SKK-JISYO.th-character.lisp",
+                        windows_home .. "/skk/SKK-JISYO.th.lisp-r12/SKK-JISYO.th.lisp-r12/SKK-JISYO.th-spellcard.lisp",
+                    }
+                }
+            end
         end
     },
     {
