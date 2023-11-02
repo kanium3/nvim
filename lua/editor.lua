@@ -15,3 +15,6 @@ vim.opt.list = true
 vim.opt.listchars:append("space:⋅")
 vim.opt.listchars:append("eol:↴")
 
+if vim.g.neovide then
+    vim.o.guifont = "JetBrainsMono Nerd Font Mono,UD デジタル 教科書体 NP-B,IBM Plex Sans JP:h13"
+end
