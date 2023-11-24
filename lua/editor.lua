@@ -24,7 +24,7 @@ vim.cmd([[
 ]])
 
 if vim.g.neovide and jit.os == 'Linux' then
-    vim.o.guifont = "JetBrainsMono Nerd Font Mono,IBM Plex Sans JP:h10"
+    vim.o.guifont = "JetBrainsMono NF,IBM Plex Sans JP:h10"
 else
-    vim.o.guifont = "JetBrainsMono Nerd Font Mono,UD デジタル 教科書体 NP-B,IBM Plex Sans JP:h13.5"
+    vim.o.guifont = "JetBrainsMono NF,UD デジタル 教科書体 NP-B,IBM Plex Sans JP:h13.5"
 end
