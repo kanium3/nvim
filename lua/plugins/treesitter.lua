@@ -10,11 +10,15 @@ return {
         event = { "BufNewFile", "BufRead" },
         dependencies = {
             "nvim-treesitter/nvim-treesitter-textobjects",
+            "windwp/nvim-ts-autotag"
         },
         config = function()
             local opts = {
                 highlight = {
                     enable = true,
+                },
+                autotag = {
+                    enable = true
                 },
                 textobjects = {
                     select = {
