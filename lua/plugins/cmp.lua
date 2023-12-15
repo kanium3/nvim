@@ -2,13 +2,17 @@ return {
     "hrsh7th/nvim-cmp",
     event = "InsertEnter",
     dependencies = {
-        "L3MON4D3/LuaSnip",
+        {
+            "L3MON4D3/LuaSnip",
+            tag = "v2.1.1",
+            run = "make install_jsregexp",
+        },
         "saadparwaiz1/cmp_luasnip",
         "hrsh7th/cmp-nvim-lsp",
         "hrsh7th/cmp-buffer",
         "hrsh7th/cmp-cmdline",
         "FelipeLema/cmp-async-path",
-        "hrsh7th/cmp-nvim-lsp-signature-help"
+        "hrsh7th/cmp-nvim-lsp-signature-help",
     },
     config = function()
         -- From https://github.com/hrsh7th/nvim-cmp
@@ -31,12 +35,12 @@ return {
                 ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
             }),
             sources = cmp.config.sources({
+                { name = "luasnip" },
                 { name = "nvim_lsp" },
-                { name = "luasnip" }, -- For luasnip users.
             }, {
                 { name = "buffer" },
                 { name = "async_path" },
-                { name = 'nvim_lsp_signature_help' }
+                { name = "nvim_lsp_signature_help" },
             }),
         })
         cmp.setup.filetype("gitcommit", {
