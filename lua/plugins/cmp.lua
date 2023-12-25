@@ -13,6 +13,7 @@ return {
         "hrsh7th/cmp-cmdline",
         "FelipeLema/cmp-async-path",
         "hrsh7th/cmp-nvim-lsp-signature-help",
+        "lukas-reineke/cmp-rg",
     },
     config = function()
         -- From https://github.com/hrsh7th/nvim-cmp
@@ -39,6 +40,7 @@ return {
                 { name = "nvim_lsp" },
             }, {
                 { name = "buffer" },
+                { name = "rg" },
                 { name = "async_path" },
                 { name = "nvim_lsp_signature_help" },
             }),
