@@ -111,4 +111,33 @@ return {
             end,
         },
     },
+    {
+        "smjonas/inc-rename.nvim",
+        event = { "LspAttach" },
+        dependencies = {
+            "stevearc/dressing.nvim",
+        },
+        config = function()
+            require("inc_rename").setup({
+                input_buffer_type = "dressing",
+            })
+            require("dressing").setup({
+                input = {
+                    override = function(conf)
+                        conf.col = -1
+                        conf.row = 0
+                        return conf
+                    end,
+                },
+            })
+
+            vim.api.nvim_create_autocmd("LspAttach", {
+                callback = function(_)
+                    vim.keymap.set("n", "<leader>rn", function()
+                        return ":IncRename " .. vim.fn.expand("<cword>")
+                    end, { expr = true, silent = true })
+                end,
+            })
+        end,
+    },
 }
