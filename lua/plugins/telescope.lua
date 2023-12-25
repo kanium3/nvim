@@ -11,7 +11,13 @@ return {
     cmd = { "Telescope" },
     config = function()
         local telescope = require("telescope")
-        telescope.setup({})
+        telescope.setup({
+            extensions = {
+                package_info = {
+                    theme = "ivy",
+                },
+            },
+        })
 
         telescope.load_extension("fzf")
     end,
