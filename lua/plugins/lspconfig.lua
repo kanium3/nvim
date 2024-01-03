@@ -9,7 +9,7 @@ return {
                 "aznhe21/actions-preview.nvim",
                 "SmiteshP/nvim-navic",
                 { "creativenull/efmls-configs-nvim", version = "v1.x.x" },
-                { "folke/neodev.nvim", opts = {} },
+                { "folke/neodev.nvim" },
             },
             config = function()
                 require("mason").setup()
@@ -21,6 +21,27 @@ return {
                         require("nvim-navic").attach(client, bufnr)
                     end
                 end
+                -- from https://zenn.dev/uga_rosa/articles/afe384341fc2e1
+                ---@return string[]
+                local function get_plugin_paths()
+                    local plugins = require("lazy.core.config").plugins
+                    local paths = {}
+                    for _, plugin in pairs(plugins) do
+                        table.insert(paths, plugin.dir .. "lua")
+                    end
+                    return paths
+                end
+
+                ---@return string[]
+                local function solve_local_library()
+                    local paths = get_plugin_paths()
+                    table.insert(paths, vim.fn.stdpath("config") .. "lua")
+                    table.insert(paths, vim.env.VIMRUNTIME .. "lua")
+                    table.insert(paths, "${3rd}/busted/library")
+                    table.insert(paths, "${3rd}/luassert/library")
+                    return paths
+                end
+
                 mason_lspconfig.setup_handlers({
                     function(server_name)
                         require("lspconfig")[server_name].setup({
@@ -40,6 +61,15 @@ return {
                                     },
                                     format = {
                                         enable = false,
+                                    },
+                                    runtime = {
+                                        version = "LuaJIT",
+                                        pathStrict = true,
+                                        path = { "?.lua", "?/init.lua" },
+                                    },
+                                    workspace = {
+                                        library = solve_local_library(),
+                                        checkThirdParty = "Disable",
                                     },
                                 },
                             },
