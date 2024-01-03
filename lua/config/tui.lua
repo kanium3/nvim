@@ -20,6 +20,16 @@ if not jit.os == "Windows" then
     end, {})
 end
 
+local term2 = require("terminal").terminal:new({
+    layout = { open_cmd = "botright new" },
+    cmd = { vim.o.shell },
+    autoclose = true,
+})
+
+vim.api.nvim_create_user_command("Term", function()
+    term2:toggle(nil, true)
+end, {})
+
 vim.api.nvim_create_autocmd({ "WinEnter", "BufWinEnter", "TermOpen" }, {
     callback = function(args)
         if vim.startswith(vim.api.nvim_buf_get_name(args.buf), "term://") then
