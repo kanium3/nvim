@@ -6,6 +6,7 @@ return {
             "L3MON4D3/LuaSnip",
             tag = "v2.1.1",
             run = "make install_jsregexp",
+            dependencies = { "rafamadriz/friendly-snippets" },
         },
         "saadparwaiz1/cmp_luasnip",
         "hrsh7th/cmp-nvim-lsp",
@@ -16,6 +17,7 @@ return {
         "lukas-reineke/cmp-rg",
     },
     config = function()
+        require("luasnip.loaders.from_vscode").lazy_load()
         -- From https://github.com/hrsh7th/nvim-cmp
         local cmp = require("cmp")
         cmp.setup({
@@ -25,8 +27,8 @@ return {
                 end,
             },
             window = {
-                -- completion = cmp.config.window.bordered(),
-                -- documentation = cmp.config.window.bordered(),
+                completion = cmp.config.window.bordered(),
+                documentation = cmp.config.window.bordered(),
             },
             mapping = cmp.mapping.preset.insert({
                 ["<C-b>"] = cmp.mapping.scroll_docs(-4),

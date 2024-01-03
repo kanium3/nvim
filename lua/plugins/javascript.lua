@@ -32,14 +32,11 @@ return {
                 { silent = true, noremap = true }
             )
 
-            local err, telescope = pcall(function()
-                require("telescope")
-            end)
-            if not err and not telescope == nil then
+            local err, telescope = pcall(require, "telescope")
+            if not err and telescope ~= nil then
                 telescope.load_extension("package_info")
             end
         end,
         ft = { "json" },
     },
 }
-
