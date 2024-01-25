@@ -8,4 +8,8 @@ return {
         lazy = true,
         module = true,
     },
+    {
+        "norcalli/nvim-colorizer.lua",
+        event = { "VeryLazy" },
+    },
 }
