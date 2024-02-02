@@ -4,7 +4,7 @@ return {
     config = function()
         require("onedarkpro").setup({
             highlights = {
-                ["@keyword"] = { fg = "#00ffaa" },
+                ["@keyword"] = { fg = "#00ffaa", italic = true },
                 ["@string"] = { bold = true, extend = true },
                 ["@function"] = { extend = true, italic = true, underline = true  },
                 ["@function.builtin"] = { fg = "#0059ff" },
