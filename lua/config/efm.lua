@@ -10,6 +10,7 @@ local textlint = require('efmls-configs.linters.textlint')
 M.languages = {
     javascript = { eslint,biome },
     typescript = { eslint,biome },
+    json = { biome },
     lua = { stylua, selene },
     markdown = { languagetool,markdownlint,textlint },
 }

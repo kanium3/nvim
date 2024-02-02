@@ -5,9 +5,11 @@ return {
         require("onedarkpro").setup({
             highlights = {
                 ["@keyword"] = { fg = "#00ffaa", italic = true },
+                ["@keyword.function"] = { extend = true, italic = true },
                 ["@string"] = { bold = true, extend = true },
                 ["@function"] = { extend = true, italic = true, underline = true  },
-                ["@function.builtin"] = { fg = "#0059ff" },
+                ["@function.builtin"] = { fg = "#00bfff" },
+                ["@type.qualifier.rust"] = { extend = true, underline = true }
             },
         })
     end,
