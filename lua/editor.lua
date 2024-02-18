@@ -23,7 +23,8 @@ vim.cmd([[
     set nofoldenable
 ]])
 
-if vim.g.neovide and jit.os == 'Linux' then
+-- neovide setting
+if vim.g.neovide and jit.os == "Linux" then
     vim.o.guifont = "JetBrainsMono NF,IBM Plex Sans JP:h10"
     vim.g.neovide_cursor_vfx_mode = "torpedo"
 elseif vim.g.neovide and jit.os == "Windows" then
@@ -33,3 +34,12 @@ else
     vim.o.guifont = "JetBrainsMono NF,UD デジタル 教科書体 NP-B,IBM Plex Sans JP:h13.5"
     vim.g.neovide_cursor_vfx_mode = "torpedo"
 end
+
+-- yanked
+vim.api.nvim_set_hl(0, "YankHighlight", { bg = "#008080" })
+vim.api.nvim_create_autocmd("TextYankPost", {
+    pattern = "*",
+    callback = function()
+        vim.highlight.on_yank({ higroup = "YankHighlight", timeout = 200 })
+    end,
+})

@@ -12,6 +12,14 @@ return {
                 end
             end
             vim.g.rustaceanvim = {
+                inlay_hints = {
+                    highlight = "NonText",
+                },
+                tools = {
+                    hover_actions = {
+                        auto_focus = true,
+                    },
+                },
                 server = {
                     capabilities = capabilities,
                     on_attach = on_attach,

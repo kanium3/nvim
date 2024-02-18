@@ -1,8 +1,10 @@
 return {
     "aznhe21/actions-preview.nvim",
     dependencies = {
-        "MunifTanjim/nui.nvim"
+        "MunifTanjim/nui.nvim",
     },
-    opts = {},
-    lazy = true
+    opts = {
+        backend = { "nui", "telescope" },
+    },
+    lazy = true,
 }

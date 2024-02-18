@@ -9,6 +9,7 @@ return {
                 "aznhe21/actions-preview.nvim",
                 "SmiteshP/nvim-navic",
                 { "creativenull/efmls-configs-nvim", version = "v1.x.x" },
+                --{ dir = "/data/repo/efmls-configs-nvim" },
                 { "folke/neodev.nvim" },
             },
             config = function()
@@ -108,6 +109,11 @@ return {
                     on_attach = on_attach,
                     root_dir = require("lspconfig").util.root_pattern("deno.json", "deno.jsonc"),
                 })
+                require("lspconfig").biome.setup({
+                    cmd = { "pnpm", "exec", "biome", "lsp-proxy" },
+                    capabilities = capabilities,
+                    on_attach = on_attach,
+                })
                 vim.api.nvim_create_autocmd("LspAttach", {
                     callback = function(_)
                         vim.keymap.set("n", "K", function()
@@ -166,6 +172,26 @@ return {
                     vim.keymap.set("n", "<leader>rn", function()
                         return ":IncRename " .. vim.fn.expand("<cword>")
                     end, { expr = true, silent = true })
+                end,
+            })
+        end,
+    },
+    {
+        "lvimuser/lsp-inlayhints.nvim",
+        event = { "LspAttach" },
+        config = function()
+            require("lsp-inlayhints").setup({})
+            vim.api.nvim_create_augroup("LspAttach_inlayhints", {})
+            vim.api.nvim_create_autocmd("LspAttach", {
+                group = "LspAttach_inlayhints",
+                callback = function(args)
+                    if not (args.data and args.data.client_id) then
+                        return
+                    end
+
+                    local bufnr = args.buf
+                    local client = vim.lsp.get_client_by_id(args.data.client_id)
+                    require("lsp-inlayhints").on_attach(client, bufnr)
                 end,
             })
         end,
