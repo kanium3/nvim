@@ -24,18 +24,8 @@ return {
                 end
                 -- from https://zenn.dev/uga_rosa/articles/afe384341fc2e1
                 ---@return string[]
-                local function get_plugin_paths()
-                    local plugins = require("lazy.core.config").plugins
-                    local paths = {}
-                    for _, plugin in pairs(plugins) do
-                        table.insert(paths, plugin.dir .. "lua")
-                    end
-                    return paths
-                end
-
-                ---@return string[]
                 local function solve_local_library()
-                    local paths = get_plugin_paths()
+                    local paths = require("config.plugin").get_plugin_lua_paths();
                     table.insert(paths, vim.fn.stdpath("config") .. "lua")
                     table.insert(paths, vim.env.VIMRUNTIME .. "lua")
                     table.insert(paths, "${3rd}/busted/library")

@@ -13,8 +13,10 @@ return {
             { "<C-j>", "<Plug>(skkeleton-toggle)", mode = { "i", "c", "l" } },
         },
         config = function()
+            local plugins = require("config.plugin").get_plugin_name_path()
+            local this_path = plugins["skkeleton"] .. "/denops/skkeleton/main.ts"
             -- Lazy loaded by using this function
-            vim.fn["denops#plugin#register"]("skkeleton")
+            vim.fn["denops#plugin#load"]("skkeleton", this_path)
 
             if not jit.os == 'Windows' then
                 vim.fn["skkeleton#config"] {
@@ -49,7 +51,9 @@ return {
         },
         lazy = true,
         config = function()
-            vim.fn["denops#plugin#register"]("kensaku")
+            local plugins = require("config.plugin").get_plugin_name_path()
+            local this_path = plugins["kensaku.vim"] .. "/denops/kensaku/main.ts"
+            vim.fn["denops#plugin#load"]("kensaku", this_path)
         end
     },
     {
@@ -65,7 +69,9 @@ return {
             vim.g.fuzzy_motion_matchers = { "fzf", "kensaku" }
         end,
         config = function()
-            vim.fn["denops#plugin#register"]("fuzzy-motion")
+            local plugins = require("config.plugin").get_plugin_name_path()
+            local this_path = plugins["fuzzy-motion.vim"] .. "/denops/fuzzy-motion/main.ts"
+            vim.fn["denops#plugin#load"]("fuzzy-motion", this_path)
         end
     },
 }
