@@ -10,11 +10,14 @@ return {
                 "SmiteshP/nvim-navic",
                 { "creativenull/efmls-configs-nvim", version = "v1.x.x" },
                 --{ dir = "/data/repo/efmls-configs-nvim" },
+                { "dmmulroy/ts-error-translator.nvim" },
                 { "folke/neodev.nvim" },
             },
             config = function()
                 require("mason").setup()
-                require("neodev").setup({})
+                require("neodev").setup({
+                    library = { plugins = { "neotest" }, types = true },
+                })
                 local capabilities = require("cmp_nvim_lsp").default_capabilities()
                 local mason_lspconfig = require("mason-lspconfig")
                 local on_attach = function(client, bufnr)
@@ -25,7 +28,7 @@ return {
                 -- from https://zenn.dev/uga_rosa/articles/afe384341fc2e1
                 ---@return string[]
                 local function solve_local_library()
-                    local paths = require("config.plugin").get_plugin_lua_paths();
+                    local paths = require("config.plugin").get_plugin_lua_paths()
                     table.insert(paths, vim.fn.stdpath("config") .. "lua")
                     table.insert(paths, vim.env.VIMRUNTIME .. "lua")
                     table.insert(paths, "${3rd}/busted/library")
@@ -73,6 +76,7 @@ return {
                             root_dir = require("lspconfig").util.root_pattern("package.json"),
                             single_file_support = false,
                         })
+                        require("ts-error-translator").setup()
                     end,
                     ["efm"] = function()
                         local languages = require("config.efm").languages
@@ -101,6 +105,11 @@ return {
                 })
                 require("lspconfig").biome.setup({
                     cmd = { "pnpm", "exec", "biome", "lsp-proxy" },
+                    capabilities = capabilities,
+                    on_attach = on_attach,
+                })
+                require("lspconfig").zls.setup({
+                    cmd = { "zls" },
                     capabilities = capabilities,
                     on_attach = on_attach,
                 })
