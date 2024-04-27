@@ -5,6 +5,7 @@ return {
         "stevearc/dressing.nvim"
     },
     event = "VeryLazy",
+    enabled = false,
     config = function()
         require("nvim-tree").setup({
             filters = {
