@@ -2,7 +2,7 @@ return {
     "hrsh7th/nvim-insx",
     event = "InsertEnter",
     config = function()
-        require("insx.preset.standard").setup()
+        require("insx.preset.standard").setup({})
         local insx = require("insx")
         local pair = require("insx.recipe.auto_pair")
         local delete_pair = require("insx.recipe.delete_pair")
