@@ -141,6 +141,7 @@ return {
                         vim.keymap.set("n", "g[", function()
                             vim.diagnostic.goto_prev()
                         end)
+                        vim.lsp.inlay_hint.enable(true)
                     end,
                 })
             end,
@@ -175,6 +176,7 @@ return {
             })
         end,
     },
+    --[[
     {
         "lvimuser/lsp-inlayhints.nvim",
         event = { "LspAttach" },
@@ -195,4 +197,5 @@ return {
             })
         end,
     },
+    ]]
 }
