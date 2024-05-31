@@ -20,7 +20,6 @@ vim.opt.ff = "unix"
 vim.cmd([[
     set foldmethod=expr
     set foldexpr=nvim_treesitter#foldexpr()
-    set nofoldenable
 ]])
 
 -- neovide setting

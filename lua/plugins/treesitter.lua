@@ -122,4 +122,15 @@ return {
             "MunifTanjim/nui.nvim",
         },
     },
+    {
+        'anuvyklack/pretty-fold.nvim',
+        dependencies = {
+            "nvim-treesitter/nvim-treesitter",
+        },
+        event = {
+            "BufNewFile",
+            "BufRead",
+        },
+        opts = {},
+    }
 }
