@@ -17,11 +17,10 @@ vim.opt.listchars:append("eol:↴")
 vim.opt.ff = "unix"
 
 -- fold setting
-vim.cmd([[
-    set foldmethod=expr
-    set foldexpr=nvim_treesitter#foldexpr()
-]])
-
+vim.o.foldenable = true
+vim.o.foldcolumn = "1"
+vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+vim.o.foldlevelstart = 99
 -- neovide setting
 if vim.g.neovide and jit.os == "Linux" then
     vim.o.guifont = "JetBrainsMono NF,IBM Plex Sans JP:h10"
@@ -44,5 +43,5 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 })
 
 vim.filetype.add({
-  pattern = { [".*/hypr/.*%.conf"] = "hyprlang" },
+    pattern = { [".*/hypr/.*%.conf"] = "hyprlang" },
 })
