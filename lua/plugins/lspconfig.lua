@@ -9,31 +9,16 @@ return {
                 "aznhe21/actions-preview.nvim",
                 "SmiteshP/nvim-navic",
                 { "creativenull/efmls-configs-nvim", version = "v1.x.x" },
-                --{ dir = "/data/repo/efmls-configs-nvim" },
                 { "dmmulroy/ts-error-translator.nvim" },
-                { "folke/neodev.nvim" },
             },
             config = function()
                 require("mason").setup()
-                require("neodev").setup({
-                    library = { plugins = { "neotest" }, types = true },
-                })
                 local capabilities = require("cmp_nvim_lsp").default_capabilities()
                 local mason_lspconfig = require("mason-lspconfig")
                 local on_attach = function(client, bufnr)
                     if client.server_capabilities["documentSymbolProvider"] then
                         require("nvim-navic").attach(client, bufnr)
                     end
-                end
-                -- from https://zenn.dev/uga_rosa/articles/afe384341fc2e1
-                ---@return string[]
-                local function solve_local_library()
-                    local paths = require("config.plugin").get_plugin_lua_paths()
-                    table.insert(paths, vim.fn.stdpath("config") .. "lua")
-                    table.insert(paths, vim.env.VIMRUNTIME .. "lua")
-                    table.insert(paths, "${3rd}/busted/library")
-                    table.insert(paths, "${3rd}/luassert/library")
-                    return paths
                 end
 
                 mason_lspconfig.setup_handlers({
@@ -55,15 +40,6 @@ return {
                                     },
                                     format = {
                                         enable = false,
-                                    },
-                                    runtime = {
-                                        version = "LuaJIT",
-                                        pathStrict = true,
-                                        path = { "?.lua", "?/init.lua" },
-                                    },
-                                    workspace = {
-                                        library = solve_local_library(),
-                                        checkThirdParty = "Disable",
                                     },
                                 },
                             },
@@ -148,6 +124,19 @@ return {
         },
     },
     {
+        "folke/lazydev.nvim",
+        ft = "lua",
+        event = { "LspAttach" },
+        dependencies = {
+            { "Bilal2453/luvit-meta", lazy = true },
+        },
+        opts = {
+            library = {
+                { path = "luvit-meta/library", words = { "vim%.uv" } },
+            },
+        },
+    },
+    {
         "smjonas/inc-rename.nvim",
         event = { "LspAttach" },
         dependencies = {
@@ -176,26 +165,4 @@ return {
             })
         end,
     },
-    --[[
-    {
-        "lvimuser/lsp-inlayhints.nvim",
-        event = { "LspAttach" },
-        config = function()
-            require("lsp-inlayhints").setup({})
-            vim.api.nvim_create_augroup("LspAttach_inlayhints", {})
-            vim.api.nvim_create_autocmd("LspAttach", {
-                group = "LspAttach_inlayhints",
-                callback = function(args)
-                    if not (args.data and args.data.client_id) then
-                        return
-                    end
-
-                    local bufnr = args.buf
-                    local client = vim.lsp.get_client_by_id(args.data.client_id)
-                    require("lsp-inlayhints").on_attach(client, bufnr)
-                end,
-            })
-        end,
-    },
-    ]]
 }

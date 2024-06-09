@@ -45,6 +45,7 @@ return {
                 { name = "rg" },
                 --{ name = "async_path" },
                 { name = "nvim_lsp_signature_help" },
+                { name = "lazydev", group_index = 0 },
             }),
         })
         cmp.setup.filetype("gitcommit", {

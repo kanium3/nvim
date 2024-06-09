@@ -1,5 +1,6 @@
 require("bootstrap")
 require("editor")
+require("relative")
 
 require("lazy").setup("plugins", {
     performance = {
