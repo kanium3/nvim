@@ -21,7 +21,7 @@ if not jit.os == "Windows" then
 end
 
 local term2 = require("terminal").terminal:new({
-    layout = { open_cmd = "botright new" },
+    layout = { open_cmd = "float" },
     cmd = { vim.o.shell },
     autoclose = true,
 })
