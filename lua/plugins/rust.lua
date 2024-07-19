@@ -17,7 +17,7 @@ return {
             local liblldb_path = extension_path .. "lldb/lib/liblldb"
 
             -- The path is different on Windows
-            if jit.os == 'Windows' then
+            if jit.os == "Windows" then
                 codelldb_path = extension_path .. "adapter\\codelldb.exe"
                 liblldb_path = extension_path .. "lldb\\bin\\liblldb.dll"
             else
@@ -58,7 +58,15 @@ return {
         event = { "BufRead Cargo.toml" },
         tag = "stable",
         config = function()
-            require("crates").setup()
+            require("crates").setup({
+                src = {
+                    completion = {
+                        cmp = {
+                            enabled = true,
+                        },
+                    },
+                },
+            })
             vim.api.nvim_create_autocmd("BufRead", {
                 group = vim.api.nvim_create_augroup("CmpSourceCargo", { clear = true }),
                 pattern = "Cargo.toml",

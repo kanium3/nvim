@@ -54,6 +54,14 @@ return {
                         })
                         require("ts-error-translator").setup()
                     end,
+                    ["omnisharp"] = function()
+                        local local_path = vim.fn.expand("~") .. "/.local/share/nvim/mason/bin/omnisharp"
+                        require("lspconfig").omnisharp.setup({
+                            capabilities = capabilities,
+                            on_attach = on_attach,
+                            cmd = { local_path }
+                        })
+                    end,
                     ["efm"] = function()
                         local languages = require("config.efm").languages
                         local efmls_config = {
