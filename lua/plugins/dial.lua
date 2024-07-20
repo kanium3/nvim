@@ -3,63 +3,80 @@ return {
     keys = {
         {
             "<C-a>",
-            function()
-                require("dial.map").inc_normal()
-            end,
-            desc = "increase"
+            "<Plug>(dial-increment)",
+            { noremap = true },
+            desc = "increase",
         },
         {
             "g<C-a>",
-            function()
-                require("dial.map").inc_gnormal()
-            end,
-            desc = "global increase"
+            "g<Plug>(dial-increment)",
+            { noremap = true },
+            desc = "global increase",
         },
         {
             "<C-x>",
-            function()
-                require("dial.map").dec_normal()
-            end,
-            desc = "decrease"
+            "<Plug>(dial-decrement)",
+            { noremap = true },
+            desc = "decrease",
         },
         {
             "g<C-x>",
-            function()
-                require("dial.map").dec_gnormal()
-            end,
-            desc = "global decrease"
+            "g<Plug>(dial-decrement)",
+            { noremap = true },
+            desc = "global decrease",
         },
         {
             "<C-a>",
-            function()
-                require("dial.map").inc_visual()
-            end,
+            "<Plug>(dial-increment)",
             mode = "v",
-            desc = "visual increase"
+            { noremap = true },
+            desc = "visual increase",
         },
         {
             "<C-x>",
-            function()
-                require("dial.map").dec_visual()
-            end,
+            "<Plug>(dial-decrement)",
             mode = "v",
-            desc = "visual decrease"
+            { noremap = true },
+            desc = "visual decrease",
         },
         {
             "g<C-a>",
-            function()
-                require("dial.map").inc_gvisual()
-            end,
+            "g<Plug>(dial-increment)",
             mode = "v",
-            desc = "visual global increase"
+            { noremap = true },
+            desc = "visual global increase",
         },
         {
             "g<C-x>",
-            function()
-                require("dial.map").dec_gvisual()
-            end,
+            "g<Plug>(dial-decrement)",
             mode = "v",
-            desc = "visual global decrease"
+            { noremap = true },
+            desc = "visual global decrease",
         },
-    }
+    },
+    config = function()
+        -- default setting: https://github.com/monaqa/dial.nvim
+        local augend = require("dial.augend")
+        require("dial.config").augends:register_group({
+            default = {
+                augend.integer.alias.decimal,
+                augend.integer.alias.hex,
+                augend.date.alias["%Y/%m/%d"],
+                augend.constant.alias.bool
+            },
+            typescript = {
+                augend.integer.alias.decimal,
+                augend.integer.alias.hex,
+                augend.constant.new({ elements = { "let", "const" } }),
+            },
+            visual = {
+                augend.integer.alias.decimal,
+                augend.integer.alias.hex,
+                augend.date.alias["%Y/%m/%d"],
+                augend.constant.alias.alpha,
+                augend.constant.alias.Alpha,
+                augend.constant.alias.bool
+            },
+        })
+    end,
 }
