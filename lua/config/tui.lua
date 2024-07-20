@@ -27,6 +27,7 @@ local term2 = require("terminal").terminal:new({
 })
 
 vim.api.nvim_create_user_command("Term", function()
+    vim.keymap.set("t", "<ESC>", [[<C-\><C-n>]], { silent = true })
     term2:toggle(nil, true)
 end, {})
 
