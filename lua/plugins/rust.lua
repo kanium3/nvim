@@ -57,15 +57,18 @@ return {
         "saecki/crates.nvim",
         event = { "BufRead Cargo.toml" },
         tag = "stable",
+        dependencies = {
+            "neovim/nvim-lspconfig",
+        },
         config = function()
             require("crates").setup({
-                src = {
-                    completion = {
-                        cmp = {
-                            enabled = true,
-                        },
+                    lsp = {
+                        enabled = true,
+                        on_attach = function(_, _) end,
+                        actions = true,
+                        completion = true,
+                        hover = true,
                     },
-                },
             })
             vim.api.nvim_create_autocmd("BufRead", {
                 group = vim.api.nvim_create_augroup("CmpSourceCargo", { clear = true }),
