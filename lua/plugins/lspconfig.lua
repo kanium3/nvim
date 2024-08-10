@@ -8,7 +8,8 @@ return {
                 "williamboman/mason.nvim",
                 "aznhe21/actions-preview.nvim",
                 "SmiteshP/nvim-navic",
-                { "dmmulroy/ts-error-translator.nvim" },
+                "dmmulroy/ts-error-translator.nvim",
+                "p00f/clangd_extensions.nvim",
             },
             config = function()
                 require("mason").setup()
@@ -58,9 +59,16 @@ return {
                         require("lspconfig").omnisharp.setup({
                             capabilities = capabilities,
                             on_attach = on_attach,
-                            cmd = { local_path }
+                            cmd = { local_path },
                         })
                     end,
+                    ["clangd"] = function()
+                        require("lspconfig").clangd.setup({
+                            capabilities = capabilities,
+                            on_attach = on_attach,
+                        })
+                        require("clangd_extensions").setup({})
+                    end
                 })
                 require("lspconfig").denols.setup({
                     capabilities = capabilities,
