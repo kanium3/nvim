@@ -1,24 +1,32 @@
-if not jit.os == "Windows" then
-    local mail = require("toggleterm").Terminal:new({
-        direction = "float",
-        cmd = { "neomutt" },
-        close_on_exit = true
-    })
+local mail = require("toggleterm.terminal").Terminal:new({
+    direction = "float",
+    cmd = "neomutt",
+    close_on_exit = true,
+})
 
-    vim.api.nvim_create_user_command("Mail", function()
-        mail:toggle(nil, true)
-    end, {})
+vim.api.nvim_create_user_command("Mail", function()
+    mail:toggle()
+end, {})
 
-    local spotify = require("toggleterm").Terminal:new({
-        direction = "float",
-        cmd = { "spt" },
-        close_on_exit = true
-    })
+local spotify = require("toggleterm.terminal").Terminal:new({
+    direction = "float",
+    cmd = "spt",
+    close_on_exit = true,
+})
 
-    vim.api.nvim_create_user_command("Music", function()
-        spotify:toggle(nil, true)
-    end, {})
-end
+vim.api.nvim_create_user_command("Music", function()
+    spotify:toggle()
+end, {})
+
+local podman = require("toggleterm.terminal").Terminal:new({
+    direction = "float",
+    cmd = "podman-tui",
+    close_on_exit = true,
+})
+
+vim.api.nvim_create_user_command("Podman", function()
+    podman:toggle()
+end, {})
 
 vim.api.nvim_create_autocmd({ "WinEnter", "BufWinEnter", "TermOpen" }, {
     callback = function(args)
