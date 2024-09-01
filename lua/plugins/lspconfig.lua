@@ -8,7 +8,6 @@ return {
                 "williamboman/mason.nvim",
                 "aznhe21/actions-preview.nvim",
                 "SmiteshP/nvim-navic",
-                "dmmulroy/ts-error-translator.nvim",
                 "p00f/clangd_extensions.nvim",
             },
             config = function()
@@ -45,14 +44,25 @@ return {
                             },
                         })
                     end,
-                    ["tsserver"] = function()
-                        require("lspconfig").tsserver.setup({
+                    ["vtsls"] = function()
+                        require("lspconfig").vtsls.setup({
                             capabilities = capabilities,
                             on_attach = on_attach,
                             root_dir = require("lspconfig").util.root_pattern("package.json"),
                             single_file_support = false,
+                            settings = {
+                                typescript = {
+                                    inlayHints = {
+                                        parameterNames = { enabled = "literals" },
+                                        parameterTypes = { enabled = true },
+                                        variableTypes = { enabled = false },
+                                        propertyDeclarationTypes = { enabled = true },
+                                        functionLikeReturnTypes = { enabled = true },
+                                        enumMemberValues = { enabled = true },
+                                    },
+                                },
+                            },
                         })
-                        require("ts-error-translator").setup()
                     end,
                     ["omnisharp"] = function()
                         local local_path = vim.fn.expand("~") .. "/.local/share/nvim/mason/bin/omnisharp"
@@ -68,7 +78,7 @@ return {
                             on_attach = on_attach,
                         })
                         require("clangd_extensions").setup({})
-                    end
+                    end,
                 })
                 require("lspconfig").denols.setup({
                     capabilities = capabilities,

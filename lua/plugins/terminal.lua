@@ -12,5 +12,7 @@ return {
             close_on_exit = true
         })
         require("config.tui")
+
+        vim.keymap.set("n", "<leader>tr", "<CMD>ToggleTerm<CR>", { silent = true })
     end,
 }
