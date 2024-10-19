@@ -70,6 +70,24 @@ return {
                             capabilities = capabilities,
                             on_attach = on_attach,
                             cmd = { local_path },
+                            settings = {
+                                dotnet = {
+                                    inlayHints = {
+                                        enableForParameters = true,
+                                        forLiteralParameters = true,
+                                        forIndexerParameters = true,
+                                        forObjectCreationParameters = true,
+                                        forOtherParameters = true,
+                                        suppressForParametersThatDifferOnlyBySuffix = false,
+                                        suppressForParametersThatMatchMethodIntent = false,
+                                        suppressForParametersThatMatchArgumentName = false,
+                                        enableForTypes = true,
+                                        forImplicitVariableTypes = true,
+                                        forLambdaParameterTypes = true,
+                                        forImplicitObjectCreation = true,
+                                    },
+                                },
+                            },
                         })
                     end,
                     ["clangd"] = function()
@@ -92,6 +110,12 @@ return {
                 })
                 require("lspconfig").zls.setup({
                     cmd = { "zls" },
+                    capabilities = capabilities,
+                    on_attach = on_attach,
+                })
+                require("lspconfig").pyright.setup({
+                    root_dir = require("lspconfig").util.root_pattern(".venv"),
+                    cmd = { "bash", "-c", "source .venv/bin/activate && .venv/bin/pyright-python-langserver --stdio" },
                     capabilities = capabilities,
                     on_attach = on_attach,
                 })
