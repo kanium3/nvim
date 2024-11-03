@@ -23,6 +23,7 @@ vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decr
 vim.o.foldlevelstart = 99
 -- neovide setting
 if vim.g.neovide and jit.os == "Linux" then
+    vim.g.neovide_scale_factor = 1.3
     vim.o.guifont = "JetBrainsMono NF,IBM Plex Sans JP:h10"
     vim.g.neovide_cursor_vfx_mode = "torpedo"
 elseif vim.g.neovide and jit.os == "Windows" then
