@@ -18,10 +18,16 @@ return {
     opts = {
         formatters_by_ft = {
             lua = { "stylua" },
-            python = { "ruff_fix", "ruff_format", "ruff_organize_imports" }
+            python = { "ruff_fix", "ruff_format", "ruff_organize_imports" },
+            yaml = { "yamlfmt" },
         },
         default_format_opts = {
             lsp_format = "fallback",
+        },
+        formatters = {
+            yamlfmt = {
+                prepend_args = { "-formatter", "indent=4,line_ending=lf,retain_line_breaks=true" },
+            },
         },
     },
 }
