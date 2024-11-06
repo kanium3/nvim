@@ -6,7 +6,10 @@ return {
             "williamboman/mason-lspconfig.nvim",
             dependencies = {
                 "williamboman/mason.nvim",
-                "aznhe21/actions-preview.nvim",
+                {
+                    "Chaitanyabsprip/fastaction.nvim",
+                    opts = {},
+                },
                 "SmiteshP/nvim-navic",
                 "p00f/clangd_extensions.nvim",
             },
@@ -137,7 +140,8 @@ return {
                         vim.keymap.set("n", "rn", function()
                             vim.lsp.buf.rename()
                         end)
-                        vim.keymap.set({ "v", "n" }, "ca", require("actions-preview").code_actions)
+                        vim.keymap.set({ "n" }, "<leader>ca", "<Cmd>lua require('fastaction').code_action()<CR>")
+                        vim.keymap.set({ "v" }, "<leader>ca", "<Cmd>lua require('fastaction').range_code_action()<CR>")
                         vim.keymap.set("n", "ge", function()
                             vim.diagnostic.open_float()
                         end)

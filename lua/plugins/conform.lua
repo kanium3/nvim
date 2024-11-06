@@ -26,7 +26,7 @@ return {
         },
         formatters = {
             yamlfmt = {
-                prepend_args = { "-formatter", "indent=4,line_ending=lf,retain_line_breaks=true" },
+                prepend_args = { "-formatter", "indent=2,line_ending=lf,retain_line_breaks=true" },
             },
         },
     },
