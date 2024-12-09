@@ -1,4 +1,5 @@
 # lua_ls
 .luarc.json
+cd-project.nvim.json
 # lazy.nvim
 lazy-lock.json
