@@ -43,6 +43,8 @@ return {
         })
 
         telescope.load_extension("fzf")
-        telescope.load_extension('zoxide')
+        telescope.load_extension("zoxide")
+
+        vim.keymap.set("n", "<leader>lg", "<Cmd>Telescope live_grep<CR>", { desc = "Telescope live grep" })
     end,
 }

@@ -6,10 +6,10 @@ return {
             "williamboman/mason-lspconfig.nvim",
             dependencies = {
                 "williamboman/mason.nvim",
-                --[[{
+                {
                     "Chaitanyabsprip/fastaction.nvim",
                     opts = {},
-                }, ]]
+                },
                 "SmiteshP/nvim-navic",
                 "p00f/clangd_extensions.nvim",
             },
@@ -137,12 +137,11 @@ return {
                         end)
                         vim.keymap.set("n", "gi", "<cmd>Glance implementations<CR>")
                         vim.keymap.set("n", "gt", "<cmd>Glance type_definitions<CR>")
-                        vim.keymap.set("n", "rn", function()
-                            vim.lsp.buf.rename()
-                        end)
                         vim.keymap.set("n", "ge", function()
                             vim.diagnostic.open_float()
                         end)
+                        vim.keymap.set({ "n" }, "<leader>ca", "<Cmd>lua require('fastaction').code_action()<CR>")
+                        vim.keymap.set({ "v" }, "<leader>ca", "<Cmd>lua require('fastaction').range_code_action()<CR>")
                         vim.keymap.set("n", "g]", function()
                             vim.diagnostic.goto_next()
                         end)
@@ -195,19 +194,6 @@ return {
                     end, { expr = true, silent = true })
                 end,
             })
-        end,
-    },
-    {
-        "rachartier/tiny-code-action.nvim",
-        dependencies = {
-            { "nvim-lua/plenary.nvim" },
-            { "nvim-telescope/telescope.nvim" },
-        },
-        event = "LspAttach",
-        config = function()
-            vim.keymap.set({ "n" }, "<leader>ca", "<Cmd>lua require('tiny-code-action').code_action()<CR>")
-            --vim.keymap.set({ "v" }, "<leader>ca", "<Cmd>lua require('fastaction').range_code_action()<CR>")
-            require("tiny-code-action").setup()
         end,
     },
 }
