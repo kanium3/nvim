@@ -11,6 +11,17 @@ return {
     {
         "norcalli/nvim-colorizer.lua",
         event = { "VeryLazy" },
-        opts = {}
+        opts = {},
+    },
+    {
+        "MunifTanjim/nui.nvim",
+        lazy = true,
+        module = true,
+    },
+    {
+        "stevearc/dressing.nvim",
+        opts = {},
+        lazy = true,
+        module = true,
     },
 }
