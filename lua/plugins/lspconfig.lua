@@ -66,35 +66,73 @@ return {
         opts = {},
     },
     {
-        "Chaitanyabsprip/fastaction.nvim",
-        event = { "LspAttach" },
-        opts = {},
-        config = function ()
-            vim.keymap.set({ "n" }, "<leader>ca", "<Cmd>lua require('fastaction').code_action()<CR>")
-            vim.keymap.set({ "v" }, "<leader>ca", "<Cmd>lua require('fastaction').range_code_action()<CR>")
-        end
-    },
-    {
         "SmiteshP/nvim-navic",
         event = { "LspAttach" },
-        config = function ()
+        config = function()
             vim.lsp.config("*", {
                 on_attach = function(client, bufnr)
                     if client.server_capabilities.documentSymbolProvider then
                         require("nvim-navic").attach(client, bufnr)
                     end
-                end
+                end,
             })
-        end
+        end,
     },
     {
         "hrsh7th/cmp-nvim-lsp",
         event = { "LspAttach" },
-        config = function ()
-            local capabilities = require('cmp_nvim_lsp').default_capabilities()
+        config = function()
+            local capabilities = require("cmp_nvim_lsp").default_capabilities()
             vim.lsp.config("*", {
-                capabilities = capabilities
+                capabilities = capabilities,
             })
-        end
-    }
+        end,
+    },
+    {
+        "creativenull/efmls-configs-nvim",
+        event = { "LspAttach" },
+        config = function()
+            local eslint = require("efmls-configs.linters.eslint")
+            local eslint_for_format = require("efmls-configs.formatters.eslint")
+            local selene = require("efmls-configs.linters.selene")
+            local stylua = require("efmls-configs.formatters.stylua")
+            local languages = {
+                typescript = { eslint, eslint_for_format },
+                javascript = { eslint, eslint_for_format },
+                typescriptreact = { eslint, eslint_for_format },
+                javascriptreact = { eslint, eslint_for_format },
+                lua = { selene, stylua },
+            }
+
+            local efmls_config = {
+                filetypes = vim.tbl_keys(languages),
+                settings = {
+                    rootMarkers = { ".git/" },
+                    languages = languages,
+                },
+                init_options = {
+                    documentFormatting = true,
+                    documentRangeFormatting = true,
+                },
+            }
+            vim.lsp.config("efm", efmls_config)
+            vim.lsp.config("*", {
+                on_attach = function(client)
+                    if client.supports_method("textDocument/formatting") then
+                        local lsp_fmt_group = vim.api.nvim_create_augroup("LspFormattingGroup", {})
+                        vim.api.nvim_create_autocmd("BufWritePost", {
+                            group = lsp_fmt_group,
+                            callback = function(ev)
+                                local efm = vim.lsp.get_clients({ name = "efm", bufnr = ev.buf })
+                                if vim.tbl_isempty(efm) then
+                                    return
+                                end
+                                vim.lsp.buf.format({ name = "efm", async = true })
+                            end,
+                        })
+                    end
+                end,
+            })
+        end,
+    },
 }
