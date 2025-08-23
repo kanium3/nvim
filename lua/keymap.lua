@@ -12,7 +12,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
             vim.lsp.buf.hover()
         end)
         vim.keymap.set("n", "ff", function()
-            vim.lsp.buf.format()
+            vim.lsp.buf.format({
+                filter = function(client)
+                    return client.name ~= "vtsls"
+                end,
+            })
         end)
         vim.keymap.set("n", "gr", "<cmd>Glance references<CR>")
         vim.keymap.set("n", "gd", "<cmd>Glance definitions<CR>")

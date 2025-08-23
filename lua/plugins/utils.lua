@@ -24,4 +24,8 @@ return {
         lazy = true,
         module = true,
     },
+    {
+        "kanium3/neovide-ime.nvim",
+        event = { "UIEnter" },
+    },
 }
