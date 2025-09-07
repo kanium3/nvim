@@ -2,8 +2,7 @@ return {
     {
         "mrcjkb/rustaceanvim",
         version = "^6",
-        ft = { "rust" },
-        event = { "LspAttach" },
+        lazy = false,
         config = function()
             local capabilities = require("cmp_nvim_lsp").default_capabilities()
             local on_attach = function(client, bufnr)
@@ -41,9 +40,10 @@ return {
                     settings = {
                         ["rust-analyzer"] = {
                             -- enable clippy when saving
-                            checkOnSave = {
-                                command = "clippy",
-                            },
+                            checkOnSave = true,
+                            check = {
+                                command = "clippy"
+                            }
                         },
                     },
                 },

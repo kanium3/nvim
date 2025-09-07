@@ -12,10 +12,18 @@ require("lazy").setup("plugins", {
                 "tohtml",
                 "tutor",
                 "zipPlugin",
-            }
-        }
-    }
+            },
+        },
+    },
 })
 
 require("keymap")
+
+vim.api.nvim_create_autocmd("FileType", {
+    group = vim.api.nvim_create_augroup("SetupTreeSitter", {}),
+    callback = function()
+        pcall(vim.treesitter.start)
+    end,
+})
+
 vim.cmd("colorscheme onedark")

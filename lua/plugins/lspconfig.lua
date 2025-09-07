@@ -2,7 +2,13 @@ return {
     {
         "mason-org/mason-lspconfig.nvim",
         event = { "BufReadPre", "BufNewFile" },
-        opts = {},
+        opts = {
+            automatic_enable = {
+                exclude = {
+                    "rust_analyzer",
+                },
+            },
+        },
         dependencies = {
             { "mason-org/mason.nvim", opts = {} },
             "neovim/nvim-lspconfig",
