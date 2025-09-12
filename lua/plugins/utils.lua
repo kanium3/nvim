@@ -25,7 +25,7 @@ return {
         module = true,
     },
     {
-        "kanium3/neovide-ime.nvim",
+        dir = "/data/dev/neovide-ime.nvim",
         event = { "UIEnter" },
     },
 }
