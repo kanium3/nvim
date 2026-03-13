@@ -39,3 +39,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
         vim.lsp.inlay_hint.enable(true)
     end,
 })
+
+set({'n', 'x', 'o'}, '<leader>z', '<Plug>(leap)')
+set("n", "<leader>cc", "<Cmd>copen<CR>")
+set("n", "<leader>cq", "<Cmd>cclose<CR>")

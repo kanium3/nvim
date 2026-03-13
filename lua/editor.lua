@@ -16,6 +16,17 @@ vim.opt.listchars:append("space:⋅")
 vim.opt.listchars:append("eol:↴")
 vim.opt.ff = "unix"
 
+-- bufferline
+vim.opt.laststatus = 0
+vim.opt.cmdheight = 0
+vim.opt.winborder = "single"
+vim.opt.fillchars = {
+  stl = '─',
+  stlnc = '─',
+}
+vim.opt.statusline = '─'
+vim.opt.ruler = false
+
 -- fold setting
 vim.o.foldenable = true
 vim.o.foldcolumn = "1"
@@ -43,6 +54,22 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     end,
 })
 
+-- zig
+vim.lsp.enable("zls")
 vim.filetype.add({
     pattern = { [".*/hypr/.*%.conf"] = "hyprlang" },
 })
+
+-- use rg for external-grep
+-- from: https://zenn.dev/kawarimidoll/books/6064bf6f193b51/viewer/b14229
+vim.opt.grepprg = table.concat({
+  'rg',
+  '--vimgrep',
+  '--trim',
+  '--hidden',
+  [[--glob='!.git']],
+  [[--glob='!*.lock']],
+  [[--glob='!*-lock.json']],
+  [[--glob='!*generated*']],
+}, ' ')
+vim.opt.grepformat = '%f:%l:%c:%m'

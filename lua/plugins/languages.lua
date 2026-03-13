@@ -1,5 +1,58 @@
 return {
     {
+        "vuki656/package-info.nvim",
+        dependencies = { "MunifTanjim/nui.nvim" },
+        config = function()
+            require("package-info").setup({
+                package_manager = "npm",
+            })
+            -- Show dependency versions
+            vim.keymap.set({ "n" }, "<LEADER>ns", require("package-info").show, { silent = true, noremap = true })
+
+            -- Hide dependency versions
+            vim.keymap.set({ "n" }, "<LEADER>nc", require("package-info").hide, { silent = true, noremap = true })
+
+            -- Toggle dependency versions
+            vim.keymap.set({ "n" }, "<LEADER>nt", require("package-info").toggle, { silent = true, noremap = true })
+
+            -- Update dependency on the line
+            vim.keymap.set({ "n" }, "<LEADER>nu", require("package-info").update, { silent = true, noremap = true })
+
+            -- Delete dependency on the line
+            vim.keymap.set({ "n" }, "<LEADER>nd", require("package-info").delete, { silent = true, noremap = true })
+
+            -- Install a new dependency
+            vim.keymap.set({ "n" }, "<LEADER>ni", require("package-info").install, { silent = true, noremap = true })
+
+            -- Install a different dependency version
+            vim.keymap.set(
+                { "n" },
+                "<LEADER>np",
+                require("package-info").change_version,
+                { silent = true, noremap = true }
+            )
+
+            local err, telescope = pcall(require, "telescope")
+            if not err and telescope ~= nil then
+                telescope.load_extension("package_info")
+            end
+        end,
+        ft = { "json" },
+    },
+    {
+        "ray-x/go.nvim",
+        dependencies = {
+            "ray-x/guihua.lua",
+            "neovim/nvim-lspconfig",
+            "nvim-treesitter/nvim-treesitter",
+        },
+        config = function()
+            require("go").setup()
+        end,
+        ft = { "go", "gomod" },
+        build = ':lua require("go.install").update_all_sync()',
+    },
+    {
         "mrcjkb/rustaceanvim",
         version = "^6",
         lazy = false,
@@ -42,8 +95,8 @@ return {
                             -- enable clippy when saving
                             checkOnSave = true,
                             check = {
-                                command = "clippy"
-                            }
+                                command = "clippy",
+                            },
                         },
                     },
                 },
@@ -88,6 +141,28 @@ return {
             vim.list_extend(opts.adapters, {
                 require("rustaceanvim.neotest"),
             })
+        end,
+    },
+    {
+        "toppair/peek.nvim",
+        ft = { "markdown" },
+        build = "deno task --quiet build:fast",
+        config = function()
+            require("peek").setup()
+            -- refer to `configuration to change defaults`
+            vim.api.nvim_create_user_command("PeekOpen", require("peek").open, {})
+            vim.api.nvim_create_user_command("PeekClose", require("peek").close, {})
+        end,
+    },
+    {
+        "rest-nvim/rest.nvim",
+        cmd = { "Rest" },
+        dependencies = {
+            "nvim-treesitter/nvim-treesitter",
+        },
+        init = function()
+            ---@type Rest.Opts
+            vim.g.rest_nvim = {}
         end,
     },
 }

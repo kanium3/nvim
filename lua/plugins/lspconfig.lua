@@ -95,6 +95,15 @@ return {
         end,
     },
     {
+        "onsails/diaglist.nvim",
+        event = { "LspAttach" },
+        config = function()
+            require("diaglist").init({})
+            vim.keymap.set("n", "<leader>dc", "<cmd>lua require('diaglist').open_all_diagnostics()<cr>")
+            vim.keymap.set("n", "<leader>d0", "<cmd>lua require('diaglist').open_buffer_diagnostics()<cr>")
+        end,
+    },
+    {
         "creativenull/efmls-configs-nvim",
         event = { "LspAttach" },
         config = function()

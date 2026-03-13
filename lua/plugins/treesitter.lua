@@ -60,8 +60,9 @@ return {
         opts = {},
         event = {
             "BufNewFile",
-            "BufRead",
+            "BufReadPre",
         },
+        enabled = false
     },
     {
         "bennypowers/nvim-regexplainer",
