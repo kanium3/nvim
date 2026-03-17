@@ -54,11 +54,12 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     end,
 })
 
--- zig
+-- language
 vim.lsp.enable("zls")
 vim.filetype.add({
     pattern = { [".*/hypr/.*%.conf"] = "hyprlang" },
 })
+vim.lsp.enable("biome")
 
 -- use rg for external-grep
 -- from: https://zenn.dev/kawarimidoll/books/6064bf6f193b51/viewer/b14229
